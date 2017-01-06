@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <content>
+        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="780.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+                <Label prefHeight="17.0" prefWidth="263.0" text="How to Use Mass Mailer with Gmail">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Text wrappingWidth="770">
+                    Mass Mailer sends out individual emails to recipients, thus providing human touch as recipients are not clubbed in "TO" or "BCC" field.
+                </Text>
+                <Text wrappingWidth="770">
+                    Using Mass Mailer is very easy. It requires your username, password and email details like text (plain text or HTML), subject and finally a CSV file containing details of contacts you need to send the emails. 
+                </Text>
+                <Text wrappingWidth="770">
+                    Following is the sample of CSV contact file. The First row in this sample is the header row. 
+                    The header row is mandatory if header row is not found the contact file will be rejected and you will not be able to send emails. 
+                    Do not use spaces in header text. Header name "Email is mandotry."
+                </Text>
+                <ImageView fitHeight="84.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../csv-example.PNG" />
+                    </image>
+                </ImageView>
+                <Text wrappingWidth="770">
+                    After you upload your contact file you can use the header name to replace placeholders with data. e.g. 
+                    if you use {{FirstName}}, it will be substituted with "David" in the first email and subsequently with the relevant column in every row in other emails.
+                </Text>
+                <Text wrappingWidth="780">
+                    Following is the example of how to put placeholders in email subject and body.
+                </Text>
+                <ImageView fitHeight="101.3" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../mass-mail-example.PNG" />
+                    </image>
+                </ImageView>
+                <Text wrappingWidth="770">
+                   You can upload up to three files as attachments. If you attach images and want to show them inline at a specific position in your email you can put them as &lt;img src=&quot;cid:0&quot;&gt; , where 0 refers to the first image, 1 refers to 2nd image and 2 refers to the 3rd image.
+                </Text>
+            </children>
+            <padding>
+                <Insets left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </VBox>
+    </content>
+</ScrollPane>

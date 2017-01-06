@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.gmailgreetingssender.ui.AboutController">
+    <children>
+        <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="810.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Send Mails">
+                    <content>
+                        <fx:include fx:id="mainScreen" source="main-screen.fxml" />
+                    </content>
+                </Tab>
+                <Tab text="Activity Log">
+                    <content>
+                        <fx:include fx:id="messageBoard" source="message-board.fxml" />
+                    </content>
+                </Tab>
+                <Tab text="Help">
+                    <content>
+                        <fx:include fx:id="help" source="help.fxml" />
+                    </content>
+                </Tab>
+                <Tab text="About">
+                    <content>
+                        <fx:include fx:id="about" source="about.fxml" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <ImageView fitHeight="80.0" fitWidth="200.0" layoutX="39.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../logo_50.png" />
+            </image>
+        </ImageView>
+        <Hyperlink layoutX="14.0" layoutY="453.0" onAction="#openRationalMindsLink" text="www.rationalminds.net" />
+    </children>
+</AnchorPane>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.gmailgreetingssender.ui.MessageBoardController">
+   <children>
+      <TextArea editable="false"  fx:id="message" layoutX="32.0" layoutY="55.0" prefHeight="300.0" prefWidth="700.0" />
+      <Label layoutX="32.0" layoutY="31.0" prefHeight="17.0" prefWidth="296.0" text="Mass mail message board from rationalminds" />
+   </children> 
+</AnchorPane>
