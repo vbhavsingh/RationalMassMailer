@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.rationalminds.gmailgreetingssender.biz;
+package net.rationalminds.massmailer.biz;
 
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import net.rationalminds.gmailgreetingssender.ui.data.MailDetails;
+import net.rationalminds.massmailer.ui.data.MailDetails;
 
 /**
  *

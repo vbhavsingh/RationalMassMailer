@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.gmailgreetingssender.ui.AboutController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.massmailer.ui.AboutController">
     <children>
-        <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="810.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="tabPane" prefHeight="419.0" prefWidth="810.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Send Mails">
                     <content>
@@ -34,11 +34,11 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <ImageView fitHeight="80.0" fitWidth="200.0" layoutX="39.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="80.0" fitWidth="200.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../logo_50.png" />
             </image>
         </ImageView>
-        <Hyperlink layoutX="14.0" layoutY="453.0" onAction="#openRationalMindsLink" text="www.rationalminds.net" />
+        <Hyperlink layoutX="598.0" layoutY="440.0" onAction="#openRationalMindsLink" text="www.rationalminds.net" AnchorPane.rightAnchor="20.0" />
     </children>
 </AnchorPane>

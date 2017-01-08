@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.rationalminds.gmailgreetingssender.biz;
+package net.rationalminds.massmailer.biz;
 
 import com.sun.mail.smtp.SMTPMessage;
 import java.io.File;
@@ -15,9 +15,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
-import net.rationalminds.gmailgreetingssender.ui.data.MailDetails;
-import net.rationalminds.gmailgreetingssender.ui.data.MessageBoard;
-import net.rationalminds.gmailgreetingssender.utils.Utilities;
+import net.rationalminds.massmailer.ui.data.MailDetails;
+import net.rationalminds.massmailer.ui.data.MessageBoard;
+import net.rationalminds.massmailer.utils.Utilities;
 
 /**
  *
@@ -97,7 +97,7 @@ public class MassEmailService implements Runnable {
                 Transport.send(mail);
                 msgBoard.appendMessage("Mail is successfully sent to: " + contact[details.getContacts().getEmailColumnHeaderPosition()]);
             } catch (Exception e) {
-                msgBoard.appendMessage("Mail delievery failed for: " + contact[details.getContacts().getEmailColumnHeaderPosition()] + ", because " + e.getMessage());
+                msgBoard.appendMessage("Mail delivery failed for: " + contact[details.getContacts().getEmailColumnHeaderPosition()] + ", because " + e.getMessage());
             }
             
         }

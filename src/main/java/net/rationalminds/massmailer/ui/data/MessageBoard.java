@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.rationalminds.gmailgreetingssender.ui.data;
+package net.rationalminds.massmailer.ui.data;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import net.rationalminds.gmailgreetingssender.utils.Utilities;
+import net.rationalminds.massmailer.utils.Utilities;
 
 /**
  *

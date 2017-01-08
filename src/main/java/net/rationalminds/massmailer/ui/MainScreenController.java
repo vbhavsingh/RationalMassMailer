@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.rationalminds.gmailgreetingssender.ui;
+package net.rationalminds.massmailer.ui;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,14 +25,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import net.rationalminds.gmailgreetingssender.biz.BusinessHelper;
-import net.rationalminds.gmailgreetingssender.biz.MassEmailService;
-import net.rationalminds.gmailgreetingssender.ui.data.DynamicContactsFromCsv;
-import net.rationalminds.gmailgreetingssender.ui.data.MailDetails;
-import net.rationalminds.gmailgreetingssender.ui.data.MessageBoard;
-import net.rationalminds.gmailgreetingssender.utils.BadCsvFileException;
-import net.rationalminds.gmailgreetingssender.utils.Constants;
-import net.rationalminds.gmailgreetingssender.utils.Utilities;
+import net.rationalminds.massmailer.biz.BusinessHelper;
+import net.rationalminds.massmailer.biz.MassEmailService;
+import net.rationalminds.massmailer.ui.data.DynamicContactsFromCsv;
+import net.rationalminds.massmailer.ui.data.MailDetails;
+import net.rationalminds.massmailer.ui.data.MessageBoard;
+import net.rationalminds.massmailer.utils.BadCsvFileException;
+import net.rationalminds.massmailer.utils.Constants;
+import net.rationalminds.massmailer.utils.Utilities;
 
 /**
  *
@@ -81,18 +83,48 @@ public class MainScreenController implements Initializable {
         emailSubject.textProperty().bindBidirectional(details.emailSubjectProperty());
         disableApplication.textProperty().bindBidirectional(disableApplicationCmd);
 
-        gmailUserName.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-            if (!newValue) {
-                if (!gmailUserName.getText().matches(Constants.GMAIL_SRING_PATTERN)) {
-                    gmailUserName.setStyle("-fx-text-fill: red;");
-                    errorMessages.put(gmailUserName.getId(), "Put valid Gmail ID. Example someone@gmail.com");
-                } else {
-                    gmailUserName.setStyle("");
-                    errorMessages.remove(gmailUserName.getId());
+        gmailUserName.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue != oldValue) {
+                    if (!gmailUserName.getText().matches(Constants.GMAIL_SRING_PATTERN)) {
+                        gmailUserName.setStyle("-fx-text-fill: red;");
+                        errorMessages.put(gmailUserName.getId(), "Put valid Gmail ID. Example someone@gmail.com");
+                    } else {
+                        gmailUserName.setStyle("");
+                        errorMessages.remove(gmailUserName.getId());
+                    }
                 }
+                showMessages();
             }
-            showMessages();
+
         });
+
+        /*       gmailUserName.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+         if (!newValue) {
+         if (!gmailUserName.getText().matches(Constants.GMAIL_SRING_PATTERN)) {
+         gmailUserName.setStyle("-fx-text-fill: red;");
+         errorMessages.put(gmailUserName.getId(), "Put valid Gmail ID. Example someone@gmail.com");
+         } else {
+         gmailUserName.setStyle("");
+         errorMessages.remove(gmailUserName.getId());
+         }
+         }
+         showMessages();
+         });
+        
+         gmailPassword.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+         if (!newValue) {
+         if (gmailPassword.getText().length()<8) {
+         gmailPassword.setStyle("-fx-text-fill: red;");
+         errorMessages.put(gmailPassword.getId(), "Ummm! Paasword can't be that short for gmail");
+         } else {
+         gmailPassword.setStyle("");
+         errorMessages.remove(gmailPassword.getId());
+         }
+         }
+         showMessages();
+         });*/
     }
 
     /**

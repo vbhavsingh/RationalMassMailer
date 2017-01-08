@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.rationalminds.gmailgreetingssender.biz;
+package net.rationalminds.massmailer.biz;
 
 import com.sun.mail.smtp.SMTPMessage;
 import java.io.BufferedReader;
@@ -18,12 +18,12 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
-import net.rationalminds.gmailgreetingssender.ui.data.DynamicContactsFromCsv;
-import net.rationalminds.gmailgreetingssender.ui.data.MailDetails;
-import net.rationalminds.gmailgreetingssender.ui.data.MessageBoard;
-import net.rationalminds.gmailgreetingssender.utils.BadCsvFileException;
-import net.rationalminds.gmailgreetingssender.utils.Constants;
-import net.rationalminds.gmailgreetingssender.utils.Utilities;
+import net.rationalminds.massmailer.ui.data.DynamicContactsFromCsv;
+import net.rationalminds.massmailer.ui.data.MailDetails;
+import net.rationalminds.massmailer.ui.data.MessageBoard;
+import net.rationalminds.massmailer.utils.BadCsvFileException;
+import net.rationalminds.massmailer.utils.Constants;
+import net.rationalminds.massmailer.utils.Utilities;
 
 /**
  *
@@ -138,7 +138,7 @@ public class BusinessHelper {
             Transport.send(mail);
             msgBoard.appendMessage("Test mail is successfully sent to: " + details.getGmailUserName());
         } catch (Exception e) {
-            msgBoard.appendMessage("Test mail delievery failed for: " + details.getGmailUserName() + ", because " + e.getMessage());
+            msgBoard.appendMessage("Test mail delivery failed for: " + details.getGmailUserName() + ", because " + e.getMessage());
         }
     }
 }

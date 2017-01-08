@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.rationalminds.gmailgreetingssender.ui;
+package net.rationalminds.massmailer.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import net.rationalminds.gmailgreetingssender.ui.data.MessageBoard;
+import net.rationalminds.massmailer.ui.data.MessageBoard;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.rationalminds.gmailgreetingssender.ui.data;
+package net.rationalminds.massmailer.ui.data;
 
 import java.util.List;
 

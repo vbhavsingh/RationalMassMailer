@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.rationalminds.gmailgreetingssender.utils;
+package net.rationalminds.massmailer.utils;
 
-import net.rationalminds.gmailgreetingssender.ui.MassSenderUI;
+import net.rationalminds.massmailer.ui.MassSenderUI;
 
 /**
  *
