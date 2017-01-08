@@ -83,6 +83,7 @@ public class MainScreenController implements Initializable {
         emailSubject.textProperty().bindBidirectional(details.emailSubjectProperty());
         disableApplication.textProperty().bindBidirectional(disableApplicationCmd);
 
+        //Validations
         gmailUserName.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -124,7 +125,11 @@ public class MainScreenController implements Initializable {
     private void showMessages() {
         if (errorMessages.isEmpty()) {
             validationResultsText.setText("");
-            disableApplicationCmd.set("enabled");
+            if ("disabled".equals(massMailButton.getText())) {
+                disableApplicationCmd.set("");
+            } else {
+                disableApplicationCmd.set("enabled");
+            }
         } else {
             disableApplicationCmd.set("");
             String msg = "";
