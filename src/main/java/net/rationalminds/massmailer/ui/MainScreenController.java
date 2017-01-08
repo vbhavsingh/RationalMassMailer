@@ -100,31 +100,22 @@ public class MainScreenController implements Initializable {
 
         });
 
-        /*       gmailUserName.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-         if (!newValue) {
-         if (!gmailUserName.getText().matches(Constants.GMAIL_SRING_PATTERN)) {
-         gmailUserName.setStyle("-fx-text-fill: red;");
-         errorMessages.put(gmailUserName.getId(), "Put valid Gmail ID. Example someone@gmail.com");
-         } else {
-         gmailUserName.setStyle("");
-         errorMessages.remove(gmailUserName.getId());
-         }
-         }
-         showMessages();
-         });
-        
-         gmailPassword.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-         if (!newValue) {
-         if (gmailPassword.getText().length()<8) {
-         gmailPassword.setStyle("-fx-text-fill: red;");
-         errorMessages.put(gmailPassword.getId(), "Ummm! Paasword can't be that short for gmail");
-         } else {
-         gmailPassword.setStyle("");
-         errorMessages.remove(gmailPassword.getId());
-         }
-         }
-         showMessages();
-         });*/
+        gmailPassword.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+                if (newValue.length() < 8) {
+                    gmailPassword.setStyle("-fx-text-fill: red;");
+                    errorMessages.put(gmailPassword.getId(), "Gmail passwords are minumum 8 character long.");
+                } else {
+                    gmailPassword.setStyle("");
+                    errorMessages.remove(gmailPassword.getId());
+                }
+
+                showMessages();
+            }
+
+        });
     }
 
     /**
@@ -133,7 +124,9 @@ public class MainScreenController implements Initializable {
     private void showMessages() {
         if (errorMessages.isEmpty()) {
             validationResultsText.setText("");
+            disableApplicationCmd.set("enabled");
         } else {
+            disableApplicationCmd.set("");
             String msg = "";
             int i = 0;
             for (String m : errorMessages.values()) {
