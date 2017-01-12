@@ -13,7 +13,7 @@ import net.rationalminds.massmailer.ui.MassSenderUI;
  */
 public class Constants {
 
-    public static final String GMAIL_SRING_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@([Gg][Mm][Aa][Ii][Ll])(\\.[A-Za-z]{2,})$";
+    public static final String PERMITTED_EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@([Gg][Mm][Aa][Ii][Ll]|[Yy][Aa][Hh][Oo][Oo])(\\.[A-Za-z]{2,})$";
 
     public static final String EMAIL_REGEX_PATERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     

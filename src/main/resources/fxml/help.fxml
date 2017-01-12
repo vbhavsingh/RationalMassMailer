@@ -13,7 +13,7 @@
     <content>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="780.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <children>
-                <Label prefHeight="17.0" prefWidth="263.0" text="How to Use Mass Mailer with Gmail">
+                <Label prefHeight="17.0" prefWidth="400.0" text="How to Use Mass Mailer with Gmail and Yahoo">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>

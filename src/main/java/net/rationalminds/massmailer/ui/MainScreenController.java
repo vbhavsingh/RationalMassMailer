@@ -47,9 +47,9 @@ public class MainScreenController implements Initializable {
     private final StringProperty disableApplicationCmd = new SimpleStringProperty("enabled");
 
     @FXML
-    TextField gmailUserName;
+    TextField emailUserName;
     @FXML
-    TextField gmailPassword;
+    TextField emailPassword;
     @FXML
     TextField emailSubject;
     @FXML
@@ -74,8 +74,8 @@ public class MainScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        gmailUserName.textProperty().bindBidirectional(details.gmailUserNameProperty());
-        gmailPassword.textProperty().bindBidirectional(details.gmailPasswordProperty());
+        emailUserName.textProperty().bindBidirectional(details.emailUserNameProperty());
+        emailPassword.textProperty().bindBidirectional(details.emailPasswordProperty());
         emailSubject.textProperty().bindBidirectional(details.emailSubjectProperty());
         emailBody.textProperty().bindBidirectional(details.emailBodyProperty());
         contactFilePath.textProperty().bindBidirectional(details.contactFilePathProperty());
@@ -84,16 +84,16 @@ public class MainScreenController implements Initializable {
         disableApplication.textProperty().bindBidirectional(disableApplicationCmd);
 
         //Validations
-        gmailUserName.textProperty().addListener(new ChangeListener<String>() {
+        emailUserName.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue != oldValue) {
-                    if (!gmailUserName.getText().matches(Constants.GMAIL_SRING_PATTERN)) {
-                        gmailUserName.setStyle("-fx-text-fill: red;");
-                        errorMessages.put(gmailUserName.getId(), "Put valid Gmail ID. Example someone@gmail.com");
+                    if (!emailUserName.getText().matches(Constants.PERMITTED_EMAIL_PATTERN)) {
+                        emailUserName.setStyle("-fx-text-fill: red;");
+                        errorMessages.put(emailUserName.getId(), "Provide valid Gmail or Yahoo id! Always use full email id.");
                     } else {
-                        gmailUserName.setStyle("");
-                        errorMessages.remove(gmailUserName.getId());
+                        emailUserName.setStyle("");
+                        errorMessages.remove(emailUserName.getId());
                     }
                 }
                 showMessages();
@@ -101,16 +101,16 @@ public class MainScreenController implements Initializable {
 
         });
 
-        gmailPassword.textProperty().addListener(new ChangeListener<String>() {
+        emailPassword.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
                 if (newValue.length() < 8) {
-                    gmailPassword.setStyle("-fx-text-fill: red;");
-                    errorMessages.put(gmailPassword.getId(), "Gmail passwords are minumum 8 character long.");
+                    emailPassword.setStyle("-fx-text-fill: red;");
+                    errorMessages.put(emailPassword.getId(), "Mail passwords are minumum 8 character long.");
                 } else {
-                    gmailPassword.setStyle("");
-                    errorMessages.remove(gmailPassword.getId());
+                    emailPassword.setStyle("");
+                    errorMessages.remove(emailPassword.getId());
                 }
 
                 showMessages();

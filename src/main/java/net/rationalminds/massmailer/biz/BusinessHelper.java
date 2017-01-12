@@ -103,8 +103,8 @@ public class BusinessHelper {
      * @param details
      */
     public static void sendTestEmail(MailDetails details) throws MessagingException, IOException {
-        SMTPMessage mail = new SMTPMessage(SmtpSessionService.buildGoogleSession(details));
-        msgBoard.appendMessage("Created gmail session with provided credentials to send test email");
+        SMTPMessage mail = new SMTPMessage(SmtpSessionService.getEmailSession(details));
+        msgBoard.appendMessage("Created email session with provided credentials to send test email");
         String mailBody = details.getEmailBody();
         String mailSubject = details.getEmailSubject();
         MimeMultipart content = null;
@@ -130,15 +130,15 @@ public class BusinessHelper {
         }
 
         mail.setSubject(mailSubject);
-        InternetAddress to = new InternetAddress(details.getGmailUserName());
+        InternetAddress to = new InternetAddress(details.geEmailUserName());
         mail.setRecipient(Message.RecipientType.TO, to);
         mail.setContent(content);
-        msgBoard.appendMessage("Sending test mail to: " + details.getGmailUserName());
+        msgBoard.appendMessage("Sending test mail to: " + details.geEmailUserName());
         try {
             Transport.send(mail);
-            msgBoard.appendMessage("Test mail is successfully sent to: " + details.getGmailUserName());
+            msgBoard.appendMessage("Test mail is successfully sent to: " + details.geEmailUserName());
         } catch (Exception e) {
-            msgBoard.appendMessage("Test mail delivery failed for: " + details.getGmailUserName() + ", because " + e.getMessage());
+            msgBoard.appendMessage("Test mail delivery failed for: " + details.geEmailUserName() + ", because " + e.getMessage());
         }
     }
 }

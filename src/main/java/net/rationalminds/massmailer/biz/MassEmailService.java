@@ -54,8 +54,8 @@ public class MassEmailService implements Runnable {
         String headers[] = details.getContacts().getHeaders();
         MimeMultipart content = null;
         
-        SMTPMessage mail = new SMTPMessage(SmtpSessionService.buildGoogleSession(details));
-        msgBoard.appendMessage("Created gmail session with provided credentials.");
+        SMTPMessage mail = new SMTPMessage(SmtpSessionService.getEmailSession(details));
+        msgBoard.appendMessage("Created email session with provided credentials.");
         
         for (String[] contact : contacts) {
             String indvMailBody = mailBody;

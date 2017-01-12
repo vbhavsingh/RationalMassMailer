@@ -16,9 +16,9 @@ import javafx.beans.property.StringProperty;
  */
 public class MailDetails {
 
-    private final StringProperty gmailUserName;
+    private final StringProperty emailUserName;
 
-    private final StringProperty gmailPassword;
+    private final StringProperty emailPassword;
 
     private final StringProperty emailSubject;
 
@@ -33,36 +33,36 @@ public class MailDetails {
     private List<File> attachments;
 
     public MailDetails() {
-        this.gmailUserName = new SimpleStringProperty("");
-        this.gmailPassword = new SimpleStringProperty("");
+        this.emailUserName = new SimpleStringProperty("");
+        this.emailPassword = new SimpleStringProperty("");
         this.emailSubject = new SimpleStringProperty("");
         this.emailBody = new SimpleStringProperty("Paste formatted HTML mail content. \nYou can format your mail online at https://html-online.com/editor");
         this.contactFilePath = new SimpleStringProperty("");
         this.attachedFileNames = new SimpleStringProperty("Maximum 3 files allowed.");
     }
 
-    public String getGmailUserName() {
-        return gmailUserName.get();
+    public String geEmailUserName() {
+        return emailUserName.get();
     }
 
-    public void setGmailUserName(String gmailUserName) {
-        this.gmailUserName.set(gmailUserName);
+    public void setEmailUserName(String emailUserName) {
+        this.emailUserName.set(emailUserName);
     }
 
-    public StringProperty gmailUserNameProperty() {
-        return gmailUserName;
+    public StringProperty emailUserNameProperty() {
+        return emailUserName;
     }
 
-    public String getGmailPassword() {
-        return gmailPassword.get();
+    public String getEmailPassword() {
+        return emailPassword.get();
     }
 
-    public void setGmailPassword(String gmailPassword) {
-        this.gmailPassword.set(gmailPassword);
+    public void setEmailPassword(String emailPassword) {
+        this.emailPassword.set(emailPassword);
     }
 
-    public StringProperty gmailPasswordProperty() {
-        return gmailPassword;
+    public StringProperty emailPasswordProperty() {
+        return emailPassword;
     }
 
     public String getEmailSubject() {

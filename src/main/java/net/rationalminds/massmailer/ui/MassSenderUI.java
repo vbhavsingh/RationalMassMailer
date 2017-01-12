@@ -42,7 +42,7 @@ public class MassSenderUI extends Application {
             System.exit(0);
         }
         Scene scene = new Scene(root, 800, 500);
-        stage.setTitle("RationalMassMailer - Send individual mails in mass with Gmail");
+        stage.setTitle("RationalMassMailer v1.1 - Send individual mails in mass with Gmail and Yahoo");
         stage.setScene(scene);
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();

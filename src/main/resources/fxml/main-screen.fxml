@@ -17,12 +17,12 @@
     </padding>
    <children>
        
-       <Label text="From Gmail ID*:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-       <TextField fx:id="gmailUserName" promptText="Enter full gmail id" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-       <Text fx:id="gmailUserNameValidationText" style="-fx-fill: red;" text="Provide valid gmail id. Example : someone@gmail.com" visible="false" />
+       <Label text="From Email ID*:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+       <TextField fx:id="emailUserName" promptText="Enter full gmail or yahoo id" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+       <Text fx:id="emailUserNameValidationText" style="-fx-fill: red;" text="Provide valid email id. Only Gmail and Yahoo mail is supported." visible="false" />
            
-       <Label text="Gmail Password*:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-       <PasswordField fx:id="gmailPassword" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+       <Label text="Email Password*:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+       <PasswordField fx:id="emailPassword" GridPane.columnIndex="1" GridPane.rowIndex="2" />
           
        <Label text="Email Subject*:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
        <TextField fx:id="emailSubject" promptText="you can use csv headers as replacement text in subject too" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -36,8 +36,8 @@
        <Button onAction="#chosseAttachments" prefWidth="140.0" text="Select Attachments" GridPane.columnIndex="0" GridPane.rowIndex="6" />   
        <Text fx:id="attachedFileNames" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="6" />
        
-       <Button fx:id="testMailButton" prefWidth="140.0" text="Send Test Email" disable="${ gmailUserName.text.empty || gmailPassword.text.empty || emailSubject.text.empty || emailBody.text.empty || disableApplication.text.empty}" onAction="#sendTestEmail" GridPane.columnIndex="0" GridPane.rowIndex="7" />   
-       <Button fx:id="massMailButton" disable="${ gmailUserName.text.empty || gmailPassword.text.empty || emailSubject.text.empty || emailBody.text.empty || contactFilePath.text.empty || disableApplication.text.empty}" onAction="#sendMassEmails" prefWidth="140.0" text="Send Emails" GridPane.columnIndex="1" GridPane.rowIndex="7" />  
+       <Button fx:id="testMailButton" prefWidth="140.0" text="Send Test Email" disable="${ emailUserName.text.empty || emailPassword.text.empty || emailSubject.text.empty || emailBody.text.empty || disableApplication.text.empty}" onAction="#sendTestEmail" GridPane.columnIndex="0" GridPane.rowIndex="7" />   
+       <Button fx:id="massMailButton" disable="${ emailUserName.text.empty || emailPassword.text.empty || emailSubject.text.empty || emailBody.text.empty || contactFilePath.text.empty || disableApplication.text.empty}" onAction="#sendMassEmails" prefWidth="140.0" text="Send Emails" GridPane.columnIndex="1" GridPane.rowIndex="7" />  
        
        <Text fx:id="validationResultsText" style="-fx-fill: red;" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.rowSpan="5" />
        <TextField fx:id="disableApplication" text="enable" visible="false" />
