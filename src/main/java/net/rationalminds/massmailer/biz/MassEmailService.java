@@ -24,15 +24,15 @@ import net.rationalminds.massmailer.utils.Utilities;
  * @author Vaibhav Singh
  */
 public class MassEmailService implements Runnable {
-    
+
     private static final MessageBoard msgBoard = new MessageBoard();
-    
+
     private final MailDetails details;
-    
+
     public MassEmailService(MailDetails details) {
         this.details = details;
     }
-    
+
     @Override
     public void run() {
         try {
@@ -53,10 +53,10 @@ public class MassEmailService implements Runnable {
         List<String[]> contacts = details.getContacts().getRecepients();
         String headers[] = details.getContacts().getHeaders();
         MimeMultipart content = null;
-        
+
         SMTPMessage mail = new SMTPMessage(SmtpSessionService.getEmailSession(details));
         msgBoard.appendMessage("Created email session with provided credentials.");
-        
+        int count = 1;
         for (String[] contact : contacts) {
             String indvMailBody = mailBody;
             String indvMailSubject = mailSubject;
@@ -66,17 +66,17 @@ public class MassEmailService implements Runnable {
                 indvMailBody = indvMailBody.replace("{{" + header + "}}", contact[i]);
                 i++;
             }
-            
+
             MimeBodyPart body = new MimeBodyPart();
             body.setText(indvMailBody, "US-ASCII", "html");
-            
+
             if (Utilities.isThereImageFileInList(details.getAttachments())) {
                 content = new MimeMultipart("related");
             } else {
                 content = new MimeMultipart();
             }
             content.addBodyPart(body);
-            
+
             if (details.getAttachments() != null && details.getAttachments().size() > 0) {
                 int j = 0;
                 for (File file : details.getAttachments()) {
@@ -87,20 +87,23 @@ public class MassEmailService implements Runnable {
                     }
                 }
             }
-            
+
             mail.setSubject(indvMailSubject);
             InternetAddress to = new InternetAddress(contact[details.getContacts().getEmailColumnHeaderPosition()]);
             mail.setRecipient(Message.RecipientType.TO, to);
             mail.setContent(content);
-            msgBoard.appendMessage("Sending mail to: " + contact[details.getContacts().getEmailColumnHeaderPosition()]);
+            String contactName = contact[details.getContacts().getEmailColumnHeaderPosition()];
+            msgBoard.appendMessage("Sending mail to: " + contactName + ", mailing to " + count + " contact out of " + contacts.size());
+            System.out.println("Sending mail to: " + contactName + ", mailing to " + count + " contact out of " + contacts.size());
             try {
                 Transport.send(mail);
                 msgBoard.appendMessage("Mail is successfully sent to: " + contact[details.getContacts().getEmailColumnHeaderPosition()]);
             } catch (Exception e) {
                 msgBoard.appendMessage("Mail delivery failed for: " + contact[details.getContacts().getEmailColumnHeaderPosition()] + ", because " + e.getMessage());
+            } finally {
+                count++;
             }
-            
         }
     }
-    
+
 }
