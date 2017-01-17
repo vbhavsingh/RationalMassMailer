@@ -57,6 +57,8 @@ public class MassEmailService implements Runnable {
         SMTPMessage mail = new SMTPMessage(SmtpSessionService.getEmailSession(details));
         msgBoard.appendMessage("Created email session with provided credentials.");
         int count = 1;
+        int failed = 0;
+        int passed = 0;
         for (String[] contact : contacts) {
             String indvMailBody = mailBody;
             String indvMailSubject = mailSubject;
@@ -93,17 +95,19 @@ public class MassEmailService implements Runnable {
             mail.setRecipient(Message.RecipientType.TO, to);
             mail.setContent(content);
             String contactName = contact[details.getContacts().getEmailColumnHeaderPosition()];
-            msgBoard.appendMessage("Sending mail to: " + contactName + ", mailing to " + count + " contact out of " + contacts.size());
-            System.out.println("Sending mail to: " + contactName + ", mailing to " + count + " contact out of " + contacts.size());
+            msgBoard.appendMessage("Sending mail to: " + contactName + ". " + count + " out of " + contacts.size() + " contacts tried.");
             try {
                 Transport.send(mail);
                 msgBoard.appendMessage("Mail is successfully sent to: " + contact[details.getContacts().getEmailColumnHeaderPosition()]);
+                passed++;
             } catch (Exception e) {
                 msgBoard.appendMessage("Mail delivery failed for: " + contact[details.getContacts().getEmailColumnHeaderPosition()] + ", because " + e.getMessage());
+                failed++;
             } finally {
                 count++;
             }
         }
+        msgBoard.appendMessage(passed + " emails succesfully send, " + failed + " deliveries failed");
     }
 
 }

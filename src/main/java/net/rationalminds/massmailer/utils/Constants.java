@@ -17,6 +17,8 @@ public class Constants {
 
     public static final String EMAIL_REGEX_PATERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     
+    public static final int MSG_BOARD_MAX_LINES=5000;
+    
     public static MassSenderUI THIS_APP;
 
 }

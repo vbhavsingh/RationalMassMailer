@@ -79,4 +79,20 @@ public class Utilities {
         return dateFormat.format(new Date()) + " : ";
     }
 
+    public static int nthOccurrence(String text, char c, int occurrence) {
+        if (text == null) {
+            return 0;
+        }
+        int thisOccurrence = 0;
+        for (int i = 0; i < text.length(); i++) {
+            char thisChar = text.charAt(i);
+            if (c == thisChar) {
+                thisOccurrence++;
+                if (thisOccurrence == occurrence) {
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
 }

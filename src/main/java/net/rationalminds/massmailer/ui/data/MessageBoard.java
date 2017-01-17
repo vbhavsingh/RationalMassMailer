@@ -5,8 +5,10 @@
  */
 package net.rationalminds.massmailer.ui.data;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import net.rationalminds.massmailer.utils.Constants;
 import net.rationalminds.massmailer.utils.Utilities;
 
 /**
@@ -16,6 +18,12 @@ import net.rationalminds.massmailer.utils.Utilities;
 public class MessageBoard {
 
     private static final StringProperty message = new SimpleStringProperty("");
+
+    private static final StringBuffer stringBuffer = new StringBuffer();
+
+    private static long lastUpdateTime = System.currentTimeMillis();
+
+    private static int lineCount = 0;
 
     public MessageBoard() {
     }
@@ -33,9 +41,19 @@ public class MessageBoard {
     }
 
     public void appendMessage(String message) {
-        message=Utilities.currentTimestamp() + message;
-        String msg = this.message.get() +System.lineSeparator()+message;
-        this.message.set(msg);
+        lineCount++;
+        stringBuffer.append(Utilities.currentTimestamp() + message);
+        stringBuffer.append(System.lineSeparator());
+        if (System.currentTimeMillis() - lastUpdateTime > 100) {
+            String currentMsg = this.message.get();
+            if (lineCount > Constants.MSG_BOARD_MAX_LINES) {
+                currentMsg = currentMsg.substring(Utilities.nthOccurrence(currentMsg, (char) 10, lineCount));
+            }
+            String text = currentMsg + stringBuffer.toString();
+            Platform.runLater(() -> this.message.setValue(text));
+            stringBuffer.setLength(0);
+            lastUpdateTime = System.currentTimeMillis();
+        }
     }
 
 }

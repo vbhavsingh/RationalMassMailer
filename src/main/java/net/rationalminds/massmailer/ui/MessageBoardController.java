@@ -7,6 +7,7 @@ package net.rationalminds.massmailer.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -19,24 +20,22 @@ import net.rationalminds.massmailer.ui.data.MessageBoard;
  * @author Vaibhav Singh
  */
 public class MessageBoardController implements Initializable {
-    
+
     private final MessageBoard messageBoard = new MessageBoard();
-    
+
     @FXML
     TextArea message;
-    
-    @Override    
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         message.textProperty().bindBidirectional(messageBoard.getMessageProperty());
-        
-        messageBoard.getMessageProperty().addListener(new ChangeListener<String>(){
+        messageBoard.getMessageProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-               message.selectPositionCaret(message.getLength());
-               message.deselect();
+                message.positionCaret(message.getText().length());
             }
-    
+
         });
     }
-    
+
 }
