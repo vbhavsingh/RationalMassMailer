@@ -1,5 +1,5 @@
 # RationalMassMailer
-All mass email softwares are paid. Mass mail sending required professional accounts with mail providers like yahoo and google. These service providers, with free acounts provide capability of sending around 120 different emails in 1 hour, before freezing your mail send function for some hours.
+All mass email softwares are paid. Mass mail sending requires professional accounts with mail providers like yahoo and google. These service providers, with free acounts provide capability of sending around 120 different emails in 1 hour, before freezing your mail send function for some hours.
 
 RationalMassMailer has tweaked the sending to remain well below radar and expolit full features of your free email account.
 
