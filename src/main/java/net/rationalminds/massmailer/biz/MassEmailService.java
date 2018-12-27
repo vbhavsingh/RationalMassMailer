@@ -161,6 +161,9 @@ public class MassEmailService implements Runnable {
             		mainScreenLiveMessageProperty.set("Mail to: " + contactName+" failed. "+count + "/" + contacts.size());
 				}
             } finally {
+            	if(count == contacts.size()) {
+            		break;
+            	}
                 count++;
             }
             try {
@@ -173,8 +176,9 @@ public class MassEmailService implements Runnable {
         }
         mainScreenLiveMessage.setStyle("");
     	mainScreenLiveMessage.setStyle("-fx-fill: green;");
-		mainScreenLiveMessageProperty.set(passed + " emails succesfully send, " + failed + " deliveries failed");
-        msgBoard.appendMessage(passed + " emails succesfully send, " + failed + " deliveries failed");
+    	String msg = passed + " emails succesfully sent, " + failed + " deliveries failed";
+		mainScreenLiveMessageProperty.set(msg);
+        msgBoard.appendMessage(msg);
     }
     
     /**
