@@ -15,7 +15,9 @@ import net.rationalminds.massmailer.utils.Utilities;
  *
  * @author Vaibhav Singh
  */
-public class MessageBoard {
+public class MessageBoard  implements Runnable{
+	
+	private static MessageBoard board;
 
     private static final StringProperty message = new SimpleStringProperty("");
 
@@ -24,9 +26,21 @@ public class MessageBoard {
     private static long lastUpdateTime = System.currentTimeMillis();
 
     private static int lineCount = 0;
+    
+    private boolean dirtyBuffer = false;
 
-    public MessageBoard() {
+    private MessageBoard() {
+    	
     }
+    
+    public static MessageBoard getMessageBoard() {
+    	if(board == null) {
+    	    board =new MessageBoard(); 
+    		(new Thread(board)).start();
+    	}
+    	return board;
+    }
+    
 
     public StringProperty getMessageProperty() {
         return message;
@@ -41,9 +55,12 @@ public class MessageBoard {
     }
 
     public void appendMessage(String message) {
-        lineCount++;
-        stringBuffer.append(Utilities.currentTimestamp() + message);
-        stringBuffer.append(System.lineSeparator());
+    	if(message != null ) {
+    		lineCount++;
+            stringBuffer.append(Utilities.currentTimestamp() + message);
+            stringBuffer.append(System.lineSeparator());
+            dirtyBuffer = true;
+    	}   
         if (System.currentTimeMillis() - lastUpdateTime > 100) {
             String currentMsg = this.message.get();
             if (lineCount > Constants.MSG_BOARD_MAX_LINES) {
@@ -53,7 +70,23 @@ public class MessageBoard {
             Platform.runLater(() -> this.message.setValue(text));
             stringBuffer.setLength(0);
             lastUpdateTime = System.currentTimeMillis();
+            dirtyBuffer = false;
         }
     }
-
+    
+    /**
+     * This loop flushes messages on board after every 1 second
+     */
+    public void run() {
+		while (true) {
+			if (dirtyBuffer) {
+				appendMessage(null);
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				//do nothing
+			}
+		}
+	}
 }

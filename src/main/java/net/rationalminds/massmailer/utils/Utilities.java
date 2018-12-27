@@ -8,6 +8,7 @@ package net.rationalminds.massmailer.utils;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,8 +23,9 @@ import javax.mail.internet.MimeBodyPart;
  */
 public class Utilities {
 
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    private static final DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
     private static final String imageTypes[] = {"jpg", "jpeg", "png", "tif", "gif"};
+    private static final DecimalFormat timeformat = new DecimalFormat("##.00");
 
     public static String getOpenDialogInitialDir() {
         String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
@@ -77,6 +79,39 @@ public class Utilities {
 
     public static String currentTimestamp() {
         return dateFormat.format(new Date()) + " : ";
+    }
+    
+    public static String nextMailTime(long mils) {
+        Date d = new Date(System.currentTimeMillis()+mils);
+        return dateFormat.format(d);
+    }
+    
+    public static String elapsedTime(long timeInMs) {
+    	String r;
+        long time = (int) (timeInMs / 1000);
+        long secs = time % 60 > 0 ? time % 60 : 0;
+        time = time / 60;
+        long mins = time % 60 > 0 ? time % 60 : 0;
+        time = time / 60;
+        long hours = time % 24 > 0 ? time % 24 : 0;
+        long days = time / 24;
+
+        r = String.valueOf(secs);
+        String s = secs > 1 ? " seconds " : " second ";
+        r = r + s;
+        if (mins > 0) {
+            String m = (mins > 1) ? " minutes " : " minute ";
+            r = mins + m + r;
+        }
+        if (hours > 0) {
+            String h = (hours > 1) ? " hours " : " hour ";
+            r = hours + h + r;
+        }
+        if (days > 0) {
+            String d = (days > 1) ? " days " : " day ";
+            r = days + d + r;
+        }
+        return r;
     }
 
     public static int nthOccurrence(String text, char c, int occurrence) {

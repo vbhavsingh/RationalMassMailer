@@ -12,7 +12,7 @@
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="143.0" prefWidth="447.0" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="100.0">
             <children>
-                <Text>RationalMassMailer - Version 1.1</Text>
+                <Text>RationalMassMailer - Version 2.0</Text>
                 <Text>A RationalMinds Freeware</Text>
                 <Hyperlink fx:id="rationalMindsLink" onAction="#openRationalMindsLink" text="rationalminds.net" />
                 <Hyperlink fx:id="licenseLink" onAction="#openLicenseLink" text="license terms  &amp; agreemnt" />

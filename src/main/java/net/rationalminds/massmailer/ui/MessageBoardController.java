@@ -21,7 +21,7 @@ import net.rationalminds.massmailer.ui.data.MessageBoard;
  */
 public class MessageBoardController implements Initializable {
 
-    private final MessageBoard messageBoard = new MessageBoard();
+    private final MessageBoard messageBoard = MessageBoard.getMessageBoard();
 
     @FXML
     TextArea message;

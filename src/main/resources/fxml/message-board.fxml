@@ -8,10 +8,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.massmailer.ui.MessageBoardController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.massmailer.ui.MessageBoardController">
    <children>
-      <TextArea fx:id="message" editable="false" layoutX="32.0" layoutY="30.0" prefHeight="300.0" prefWidth="700.0" />
+      <TextArea fx:id="message" editable="false" layoutX="32.0" layoutY="30.0" prefHeight="500.0" prefWidth="700.0" />
       <Label layoutX="32.0" layoutY="14.0" prefHeight="17.0" prefWidth="296.0" text="Mass mail message board from rationalminds" />
-      <Label layoutX="32.0" layoutY="330.0" prefHeight="17.0" prefWidth="536.0" text="Note : Message board has capacity to show only 5000 lines. Older messages will be removed." />
+      <Label layoutX="32.0" layoutY="530.0" prefHeight="17.0" prefWidth="700.0" text="Note : Message board has capacity to show only 5000 lines. Older messages will be removed." />
    </children> 
 </AnchorPane>

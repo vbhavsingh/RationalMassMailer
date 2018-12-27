@@ -8,7 +8,9 @@ package net.rationalminds.massmailer.ui.data;
 import java.io.File;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.property.IntegerProperty;
 
 /**
  *
@@ -21,12 +23,14 @@ public class MailDetails {
     private final StringProperty emailPassword;
 
     private final StringProperty emailSubject;
-
-    private final StringProperty emailBody;
+    
+    private final StringProperty htmlEmailBody;
 
     private final StringProperty contactFilePath;
 
     private final StringProperty attachedFileNames;
+    
+    private final StringProperty mailsPerHour;
 
     private DynamicContactsFromCsv contacts;
 
@@ -36,9 +40,19 @@ public class MailDetails {
         this.emailUserName = new SimpleStringProperty("");
         this.emailPassword = new SimpleStringProperty("");
         this.emailSubject = new SimpleStringProperty("");
-        this.emailBody = new SimpleStringProperty("Paste formatted HTML mail content. \nYou can format your mail online at https://html-online.com/editor");
+        this.htmlEmailBody = new SimpleStringProperty("Paste formatted HTML content here and delete this message."
+        		+ "\n\n"
+        		+ "\nContent must be enclosed in <HTML></HTML> for proper look and feel."
+        		+ "\n\n"
+        		+ "\nYou can format your mail online, at https://html-online.com/editor"
+        		+ "\n\n\n"
+        		+ "Images can be included as links from the internet or as local files. See Help for details."
+        		+ "\n\n"
+        		+ "Yahoo and Google allows around 120 mails per day. "
+        		+ "\nChoose \"mails per hour\" value properly to remian under this limit.");
         this.contactFilePath = new SimpleStringProperty("");
-        this.attachedFileNames = new SimpleStringProperty("Maximum 3 files allowed.");
+        this.mailsPerHour = new SimpleStringProperty("60");
+        this.attachedFileNames = new SimpleStringProperty("Maximum 3 files are allowed.");
     }
 
     public String geEmailUserName() {
@@ -77,19 +91,32 @@ public class MailDetails {
         return emailSubject;
     }
 
-    public String getEmailBody() {
-        return emailBody.get();
+    public String getMailsPerHour() {
+        return mailsPerHour.get();
     }
 
-    public void setEmailBody(String emailBody) {
-        this.emailBody.set(emailBody);
+    public void setMailsPerHour(String mailsPerHour) {
+        this.mailsPerHour.set(mailsPerHour);
     }
 
-    public StringProperty emailBodyProperty() {
-        return emailBody;
+    public StringProperty mailsPerHourProperty() {
+        return mailsPerHour;
+    }
+    
+    
+    public String getHtmlEmailBody() {
+        return htmlEmailBody.get();
     }
 
-    public String getContactFilePath() {
+    public void setHtmlEmailBody(String htmlEmailBody) {
+        this.htmlEmailBody.set(htmlEmailBody);
+    }
+
+    public StringProperty htmlEmailBodyProperty() {
+        return htmlEmailBody;
+    }
+
+	public String getContactFilePath() {
         return contactFilePath.get();
     }
 
