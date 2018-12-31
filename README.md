@@ -13,4 +13,5 @@ RationalMassMailer is desktop based GUI interface that makes the work easy and s
 New build signatures (if you are downloading executable jar file)
 
 MD5 : 6a9c2b7fa20bdd283b7712057f52f7b3
+
 SHA : e6488c4e4aecf55a1296f6be05a7b9f9cd42bb02
