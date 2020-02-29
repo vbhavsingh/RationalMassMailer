@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\SOE-Load\Documents\github\RationalMassMailer\target\RationalMassMailer.jar</jar>
+  <outfile>C:\Users\SOE-Load\Documents\github\RationalMassMailer\target\RationalMassMailer.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\SOE-Load\Documents\github\RationalMassMailer\pluto-win-exe.ico</icon>
+  <singleInstance>
+    <mutexName>rationalminds_mass_email_sender</mutexName>
+    <windowTitle>Rational Mass Mailer</windowTitle>
+  </singleInstance>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.8</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+    <initialHeapSize>128</initialHeapSize>
+    <maxHeapSize>256</maxHeapSize>
+  </jre>
+  <versionInfo>
+    <fileVersion>2.0.0.0</fileVersion>
+    <txtFileVersion>2.0.0.0</txtFileVersion>
+    <fileDescription>mass email sender using yahoo and gmail</fileDescription>
+    <copyright>rationalminds.net</copyright>
+    <productVersion>2.0.0.0</productVersion>
+    <txtProductVersion>2.0.0.0</txtProductVersion>
+    <productName>RationalMassMailer</productName>
+    <companyName>rationalminds </companyName>
+    <internalName>RationalMassMailer</internalName>
+    <originalFilename>RationalMassMailer.exe</originalFilename>
+    <trademarks>RationalMassMailer</trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
+</launch4jConfig>
