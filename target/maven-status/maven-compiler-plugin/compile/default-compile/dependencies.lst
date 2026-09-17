@@ -1,0 +1,14 @@
+classpath:/Users/vaibhavsingh/.m2/repository/com/sun/mail/javax.mail/1.6.2/javax.mail-1.6.2.jar	659031:1535581852000
+classpath:/Users/vaibhavsingh/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar	62983:1146612027000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-base/25.0.4/javafx-base-25.0.4-mac.jar	749084:1784638255000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-graphics/25.0.4/javafx-graphics-25.0.4-mac.jar	5568119:1784638254000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-base/25.0.4/javafx-base-25.0.4.jar	302:1784638255000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-controls/25.0.4/javafx-controls-25.0.4-mac.jar	2602908:1784638255000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-graphics/25.0.4/javafx-graphics-25.0.4.jar	306:1784638254000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-fxml/25.0.4/javafx-fxml-25.0.4-mac.jar	126177:1784638255000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-controls/25.0.4/javafx-controls-25.0.4.jar	306:1784638254000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-web/25.0.4/javafx-web-25.0.4-mac.jar	39810182:1784638255000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-media/25.0.4/javafx-media-25.0.4.jar	303:1784638255000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/javafx-media/25.0.4/javafx-media-25.0.4-mac.jar	1618610:1784638254000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/jdk-jsobject/25.0.4/jdk-jsobject-25.0.4.jar	303:1784638255000
+classpath:/Users/vaibhavsingh/.m2/repository/org/openjfx/jdk-jsobject/25.0.4/jdk-jsobject-25.0.4-mac.jar	1675:1784638255000

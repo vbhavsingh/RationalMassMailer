@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.IntegerProperty;
+import net.rationalminds.massmailer.utils.Constants;
 
 /**
  *
@@ -21,6 +22,8 @@ public class MailDetails {
     private final StringProperty emailUserName;
 
     private final StringProperty emailPassword;
+
+    private final StringProperty mailProvider;
 
     private final StringProperty emailSubject;
     
@@ -39,6 +42,7 @@ public class MailDetails {
     public MailDetails() {
         this.emailUserName = new SimpleStringProperty("");
         this.emailPassword = new SimpleStringProperty("");
+        this.mailProvider = new SimpleStringProperty(Constants.MAIL_PROVIDER_AUTO);
         this.emailSubject = new SimpleStringProperty("");
         this.htmlEmailBody = new SimpleStringProperty("Paste formatted HTML content here and delete this message."
         		+ "\n\n"
@@ -77,6 +81,18 @@ public class MailDetails {
 
     public StringProperty emailPasswordProperty() {
         return emailPassword;
+    }
+
+    public String getMailProvider() {
+        return mailProvider.get();
+    }
+
+    public void setMailProvider(String mailProvider) {
+        this.mailProvider.set(mailProvider);
+    }
+
+    public StringProperty mailProviderProperty() {
+        return mailProvider;
     }
 
     public String getEmailSubject() {

@@ -13,7 +13,7 @@
     <content>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="780.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <children>
-                <Label prefHeight="17.0" prefWidth="400.0" text="How to Use Mass Mailer with Gmail and Yahoo">
+                <Label prefHeight="17.0" prefWidth="400.0" text="How to Use Mass Mailer with Gmail, Yahoo or SMTP2GO">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -22,7 +22,10 @@
                     Mass Mailer sends out individual emails to recipients, thus providing human touch as recipients are not clubbed in "TO" or "BCC" field.
                 </Text>
                 <Text wrappingWidth="770">
-                    Using Mass Mailer is very easy. It requires your username, password and email details like text (plain text or HTML), subject and finally a CSV file containing details of contacts you need to send the emails. 
+                    Using Mass Mailer is very easy. It requires your username, password and email details like text (plain text or HTML), subject and finally a CSV file containing details of contacts you need to send the emails.
+                </Text>
+                <Text wrappingWidth="770">
+                    Choose "Mail Provider" to pick how the mail is sent: "Auto (Gmail/Yahoo)" detects the provider from your From Email ID, while "SMTP2GO" relays mail through your SMTP2GO account and works with any sender domain. When using SMTP2GO, enter your SMTP2GO SMTP username and password in the From Email ID and Email Password fields.
                 </Text>
                 <Text wrappingWidth="770">
                     Following is the sample of CSV contact file. The First row in this sample is the header row. 

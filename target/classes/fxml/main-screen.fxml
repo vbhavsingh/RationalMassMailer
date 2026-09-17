@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.HTMLEditor?>
+<?import net.rationalminds.massmailer.ui.data.*?>
+
+<GridPane alignment="center" hgap="10" prefWidth="800.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.massmailer.ui.MainScreenController">
+    <padding>
+        <javafx.geometry.Insets bottom="1.0" left="25.0" right="25.0" top="5.0" />
+    </padding>
+    
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" minWidth="20.0" percentWidth="20.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="NEVER" percentWidth="80.0" prefWidth="100.0" />
+    </columnConstraints>
+    
+   <children>
+
+       <Label text="Mail Provider*:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+       <ComboBox fx:id="mailProvider" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+       <Label text="From Email ID*:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+       <TextField fx:id="emailUserName" promptText="Enter full gmail or yahoo id, or your SMTP2GO sender id" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+       <Label text="Email Password*:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+       <PasswordField fx:id="emailPassword" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+       <Label text="Email Subject*:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+       <TextField fx:id="emailSubject" promptText="you can use csv headers as replacement text in subject too" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+       <Label text="Formatted Mail*:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+       <TextArea prefHeight="280.0" fx:id="htmlEmailBody"  GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+       <Label text="Mails Per Hour:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+       <HBox GridPane.columnIndex="1" GridPane.rowIndex="6" >
+       	<TextField fx:id="mailsPerHour" maxWidth="50.0" text="60"/>
+       	<Label text="Minimum:1 , Maximum:999. Editable while send is in progress." alignment="BOTTOM_CENTER" style=" -fx-padding: 10;-fx-text-fill: #062FF9;"/>
+       </HBox>
+
+
+       <Button fx:id="chooseContactsFileButton" onAction="#chooseContactsFile" prefWidth="140.0" text="Open contact file*(csv)" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+       <Text fx:id="contactFilePath" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="7" />
+
+       <Button fx:id="chosseAttachmentsButton" onAction="#chosseAttachments" prefWidth="140.0" text="Select Attachments" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+       <Text fx:id="attachedFileNames" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="8" />
+
+       <Button fx:id="testMailButton" prefWidth="140.0" text="Send Test Email" disable="${ emailUserName.text.empty || emailPassword.text.empty || emailSubject.text.empty || disableApplication.text.empty}" onAction="#sendTestEmail" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+       <HBox GridPane.columnIndex="1" GridPane.rowIndex="9" >
+        	<Button fx:id="massMailButton" disable="${ emailUserName.text.empty || emailPassword.text.empty || emailSubject.text.empty || contactFilePath.text.empty || disableApplication.text.empty}" onAction="#sendMassEmails" prefWidth="140.0" text="Send Emails" />
+       		<Separator cacheShape="false" centerShape="false" focusTraversable="false" layoutX="91.0" layoutY="83.0" prefHeight="7.0" prefWidth="13.0" scaleShape="false" visible="false" />
+
+       		<Button fx:id="pauseMailButton" onAction="#pauseMailSend" prefWidth="140.0" text="Pause"  />
+       		<Separator cacheShape="false" centerShape="false" focusTraversable="false" layoutX="91.0" layoutY="83.0" prefHeight="7.0" prefWidth="13.0" scaleShape="false" visible="false" />
+
+       		<Button fx:id="resumeMailButton" onAction="#resumeMailSend" prefWidth="140.0" text="Resume" />
+       </HBox>
+
+       <HBox GridPane.columnIndex="1" GridPane.rowIndex="10">
+            <Text style="-fx-fill: red;" fx:id="mainScreenLiveMessage" />
+            <Separator cacheShape="false" centerShape="false" focusTraversable="false" layoutX="91.0" layoutY="83.0" prefHeight="7.0" prefWidth="13.0" scaleShape="false" visible="false" />
+            <ProgressBar fx:id="progressBar" GridPane.columnIndex="1" visible="false" />
+       </HBox>
+       <TextField  fx:id="disableApplication" text="enable" visible="false" />
+   </children>
+</GridPane>

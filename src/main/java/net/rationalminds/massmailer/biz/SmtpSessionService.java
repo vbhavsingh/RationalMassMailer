@@ -10,6 +10,7 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import net.rationalminds.massmailer.ui.data.MailDetails;
+import net.rationalminds.massmailer.utils.Constants;
 
 /**
  *
@@ -18,6 +19,9 @@ import net.rationalminds.massmailer.ui.data.MailDetails;
 public class SmtpSessionService {
 
     public static Session getEmailSession(MailDetails details) {
+        if (Constants.MAIL_PROVIDER_SMTP2GO.equals(details.getMailProvider())) {
+            return buildSmtp2GoSession(details);
+        }
         String userName = details.geEmailUserName();
         String mailServer = userName.substring(userName.lastIndexOf("@") + 1);
         if (mailServer.toLowerCase().contains("yahoo.")) {
@@ -34,6 +38,36 @@ public class SmtpSessionService {
 
         mailProps.put("mail.transport.protocol", "smtp");
         mailProps.put("mail.host", "smtp.gmail.com");
+        mailProps.put("mail.from", details.geEmailUserName());
+        mailProps.put("mail.smtp.starttls.enable", "true");
+        mailProps.put("mail.smtp.port", "587");
+        mailProps.put("mail.smtp.auth", "true");
+        mailProps.put("mail.smtp.connectiontimeout", "60000");
+        mailProps.put("mail.smtp.timeout", "60000");
+        mailProps.put("mail.smtp.writetimeout", "60000");
+
+        final PasswordAuthentication usernamePassword;
+        usernamePassword = new PasswordAuthentication(details.geEmailUserName(), details.getEmailPassword());
+
+        Authenticator auth = new Authenticator() {
+
+            protected PasswordAuthentication getPasswordAuthentication() {
+
+                return usernamePassword;
+
+            }
+
+        };
+        Session session = Session.getInstance(mailProps, auth);
+        return session;
+
+    }
+
+    private static Session buildSmtp2GoSession(MailDetails details) {
+        Properties mailProps = new Properties();
+
+        mailProps.put("mail.transport.protocol", "smtp");
+        mailProps.put("mail.smtp.host", "mail.smtp2go.com");
         mailProps.put("mail.from", details.geEmailUserName());
         mailProps.put("mail.smtp.starttls.enable", "true");
         mailProps.put("mail.smtp.port", "587");

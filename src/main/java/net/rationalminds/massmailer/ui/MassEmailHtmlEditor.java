@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.file.Files;
 
-import javax.swing.event.DocumentEvent.EventType;
-
 import javafx.geometry.Orientation;
 
 public class MassEmailHtmlEditor extends HTMLEditor{

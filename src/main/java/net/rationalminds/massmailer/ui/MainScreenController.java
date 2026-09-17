@@ -25,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
@@ -60,6 +61,8 @@ public class MainScreenController implements Initializable {
     private final BooleanProperty disablePauseBtnProperty = new SimpleBooleanProperty(true);
     private final BooleanProperty lockScreen = new SimpleBooleanProperty(false);
 
+    @FXML
+    ComboBox<String> mailProvider;
     @FXML
     TextField emailUserName;
     @FXML
@@ -103,6 +106,11 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     	
+        mailProvider.getItems().addAll(Constants.MAIL_PROVIDER_AUTO, Constants.MAIL_PROVIDER_SMTP2GO);
+        mailProvider.valueProperty().bindBidirectional(details.mailProviderProperty());
+        mailProvider.setValue(details.getMailProvider());
+        mailProvider.disableProperty().bindBidirectional(lockScreen);
+
         emailUserName.textProperty().bindBidirectional(details.emailUserNameProperty());
         emailUserName.disableProperty().bindBidirectional(lockScreen);
         
@@ -138,14 +146,17 @@ public class MainScreenController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue != oldValue) {
-                    if (!emailUserName.getText().matches(Constants.PERMITTED_EMAIL_PATTERN)) {
-                        emailUserName.setStyle("-fx-text-fill: red;");
-                        errorMessages.put(emailUserName.getId(), "Provide valid Gmail or Yahoo id! Always use full email id.");
-                    } else {
-                        emailUserName.setStyle("");
-                        errorMessages.remove(emailUserName.getId());
-                    }
+                    validateEmailUserName();
                 }
+                showMessages();
+            }
+
+        });
+
+        mailProvider.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                validateEmailUserName();
                 showMessages();
             }
 
@@ -188,6 +199,26 @@ public class MainScreenController implements Initializable {
 				
 			}
 		});
+    }
+
+    /**
+     * Validates the "From Email ID" field. SMTP2GO can relay mail for any
+     * sender domain, so it is checked against a generic email pattern instead
+     * of the Gmail/Yahoo-only pattern used for the auto-detected providers.
+     */
+    private void validateEmailUserName() {
+        String pattern = Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue())
+                ? Constants.EMAIL_REGEX_PATERN : Constants.PERMITTED_EMAIL_PATTERN;
+        if (!emailUserName.getText().matches(pattern)) {
+            emailUserName.setStyle("-fx-text-fill: red;");
+            String message = Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue())
+                    ? "Provide a valid, full email id."
+                    : "Provide valid Gmail or Yahoo id! Always use full email id.";
+            errorMessages.put(emailUserName.getId(), message);
+        } else {
+            emailUserName.setStyle("");
+            errorMessages.remove(emailUserName.getId());
+        }
     }
 
     /**

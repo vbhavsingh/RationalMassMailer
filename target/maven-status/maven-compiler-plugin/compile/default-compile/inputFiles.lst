@@ -1,0 +1,17 @@
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/biz/BusinessHelper.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/biz/MassEmailService.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/biz/SmtpSessionService.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/AboutController.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/Launcher.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/MainScreenController.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/MassEmailHtmlEditor.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/MassSenderUI.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/MessageBoardController.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/data/DynamicContactsFromCsv.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/data/MailDetails.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/ui/data/MessageBoard.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/utils/BadCsvFileException.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/utils/Constants.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/utils/FileLogger.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/utils/LogFormatter.java
+/Users/vaibhavsingh/Documents/GitHub/RationalMassMailer/src/main/java/net/rationalminds/massmailer/utils/Utilities.java

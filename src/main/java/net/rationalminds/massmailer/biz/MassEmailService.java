@@ -6,7 +6,6 @@
 package net.rationalminds.massmailer.biz;
 
 import com.sun.mail.smtp.SMTPMessage;
-import com.sun.org.apache.xml.internal.serializer.ElemDesc;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
