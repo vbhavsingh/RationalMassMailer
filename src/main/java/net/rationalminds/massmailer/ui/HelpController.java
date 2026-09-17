@@ -16,15 +16,16 @@ import javafx.scene.input.ClipboardContent;
 import net.rationalminds.massmailer.utils.Utilities;
 
 /**
- * Backs the Help tab's "Copy Instructions to Clipboard" button, so the
- * plain-text help content can be pasted elsewhere - e.g. into an AI
- * assistant to ask questions about using the app.
+ * Backs the Help tab's clipboard-icon button, which copies just the
+ * template/image-bundle building instructions as plain text, so they can be
+ * pasted elsewhere - e.g. into an AI assistant to ask questions about
+ * building a template.
  */
 public class HelpController implements Initializable {
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private static final String DEFAULT_LABEL = "Copy Instructions to Clipboard";
+    private static final String CLIPBOARD_ICON = "📋";
 
     @FXML
     Button copyToClipboardButton;
@@ -36,18 +37,18 @@ public class HelpController implements Initializable {
     @FXML
     protected void copyToClipboard(ActionEvent event) {
         try {
-            String instructions = Utilities.readClasspathResource(getClass(), "/help/help-instructions.txt");
+            String instructions = Utilities.readClasspathResource(getClass(), "/help/template-instructions.txt");
             ClipboardContent content = new ClipboardContent();
             content.putString(instructions);
             Clipboard.getSystemClipboard().setContent(content);
 
-            copyToClipboardButton.setText("Copied!");
+            copyToClipboardButton.setText("✓");
             javafx.animation.PauseTransition reset = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
-            reset.setOnFinished(e -> copyToClipboardButton.setText(DEFAULT_LABEL));
+            reset.setOnFinished(e -> copyToClipboardButton.setText(CLIPBOARD_ICON));
             reset.play();
         } catch (IOException ex) {
-            LOGGER.log(Level.WARNING, "Could not copy help instructions to clipboard: " + ex.getMessage());
-            copyToClipboardButton.setText("Copy failed");
+            LOGGER.log(Level.WARNING, "Could not copy template instructions to clipboard: " + ex.getMessage());
+            copyToClipboardButton.setText("✕");
         }
     }
 }

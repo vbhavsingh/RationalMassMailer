@@ -1,0 +1,27 @@
+Building a Formatted Mail Template with Images in RationalMassMailer
+
+Writing the template
+
+"Formatted Mail" has two tabs. "HTML Code" is the raw source you type or paste into - content must be enclosed in <HTML></HTML> for proper look and feel. "Formatted" renders that HTML as it will actually appear to recipients, with basic WYSIWYG editing tools (font, color, bold/italic, lists, alignment).
+
+Click "Show Sample" at any time to load a complete, ready-made example (including images) into both tabs, so you can see what a finished template looks like before writing your own.
+
+Click "Load Template" to load your own template from a file instead of typing it. It accepts a plain .txt or .html file, or an image bundle (see below). You can also format your mail online, at https://html-online.com/editor and paste the result into "HTML Code".
+
+Embedding images
+
+There are two ways to include images in your email, from simplest to most manual:
+
+A) Template bundle (recommended) - "Load Template" accepts a .zip, .tar, .tar.gz or .tgz archive containing your HTML/text template plus its images, so you never have to think about attachment numbering. To build one:
+
+1. Write your template as a normal .html (or .txt) file, and reference each image by its ordinary filename, exactly as you would on a web page, e.g. <img src="banner.png"> or <img src="logo.png">.
+
+2. Put that .html file and every image it references into one folder together (a flat folder is simplest; subfolders are fine too, RationalMassMailer matches images by filename regardless of their path inside the archive).
+
+3. Compress the contents of that folder into a single .zip or .tar/.tar.gz/.tgz file - on macOS, select the files (not the folder itself) in Finder, right-click, and choose Compress; on Windows, select the files, right-click, and choose Send to > Compressed (zipped) folder.
+
+4. Back in RationalMassMailer, click "Load Template" and choose that archive. It extracts every image, attaches it, and automatically rewrites your plain filenames (e.g. src="banner.png") to the correct inline src="cid:N" - then switches you to the "Formatted" tab so you can see the result immediately, images included.
+
+A template bundle can carry as many images as your design needs - unlike the "Select Attachments" button, which is limited to 3 files. Click "Show Sample" any time to see a working bundled example, built exactly this way.
+
+B) Manual attachments - alternatively, click "Select Attachments" to attach up to three files directly (images, PDFs, documents). If you attach images this way and want to position them inline in your email yourself, reference them as <img src="cid:0">, where 0 refers to the first attached image, 1 to the second, and 2 to the third, in the order you selected them.

@@ -9,18 +9,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.massmailer.ui.HelpController">
+<ScrollPane prefHeight="400.0" prefWidth="800.0" fitToWidth="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.massmailer.ui.HelpController">
     <content>
-        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="780.0" spacing="6.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="780.0" spacing="6.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <children>
-                <HBox alignment="CENTER_LEFT" spacing="12.0">
-                    <Label prefHeight="17.0" prefWidth="600.0" text="How to Use Mass Mailer with Gmail, Yahoo or SMTP2GO">
-                        <font>
-                            <Font name="System Bold" size="14.0" />
-                        </font>
-                    </Label>
-                    <Button fx:id="copyToClipboardButton" onAction="#copyToClipboard" text="Copy Instructions to Clipboard" />
-                </HBox>
+                <Label prefHeight="17.0" prefWidth="600.0" text="How to Use Mass Mailer with Gmail, Yahoo or SMTP2GO">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
                 <Text wrappingWidth="770">
                     Mass Mailer sends out individual emails to recipients, thus providing human touch as recipients are not clubbed in "TO" or "BCC" field.
                 </Text>
@@ -101,14 +98,21 @@
                     </image>
                 </ImageView>
 
-                <Label prefHeight="17.0" prefWidth="600.0" text="4. Writing a Formatted Mail Template" wrapText="true">
-                    <font>
-                        <Font name="System Bold" size="13.0" />
-                    </font>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <VBox.margin>
                         <Insets top="10.0" />
                     </VBox.margin>
-                </Label>
+                    <Label prefHeight="17.0" prefWidth="600.0" text="4. Writing a Formatted Mail Template" wrapText="true">
+                        <font>
+                            <Font name="System Bold" size="13.0" />
+                        </font>
+                    </Label>
+                    <Button fx:id="copyToClipboardButton" onAction="#copyToClipboard" text="&#128203;" style="-fx-font-size: 14px; -fx-padding: 2 8 2 8;">
+                        <tooltip>
+                            <Tooltip text="Copy template &amp; image-bundle building instructions to clipboard" />
+                        </tooltip>
+                    </Button>
+                </HBox>
                 <Text wrappingWidth="770">
                     "Formatted Mail" has two tabs. "HTML Code" is the raw source you type or paste into - content must be enclosed in &lt;HTML&gt;&lt;/HTML&gt; for proper look and feel. "Formatted" renders that HTML as it will actually appear to recipients, with basic WYSIWYG editing tools (font, color, bold/italic, lists, alignment).
                 </Text>
