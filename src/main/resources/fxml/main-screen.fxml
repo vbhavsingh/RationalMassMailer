@@ -41,7 +41,16 @@
            <Button fx:id="importTemplateButton" onAction="#importTemplate" text="Load Template" />
            <Button fx:id="showSampleButton" onAction="#showSampleTemplate" text="Show Sample" />
        </VBox>
-       <TextArea prefHeight="280.0" fx:id="htmlEmailBody"  GridPane.columnIndex="1" GridPane.rowIndex="5" />
+       <TabPane fx:id="mailBodyTabPane" prefHeight="320.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+           <tabs>
+               <Tab fx:id="htmlCodeTab" text="HTML Code">
+                   <TextArea fx:id="htmlEmailBody" prefHeight="300.0" />
+               </Tab>
+               <Tab fx:id="formattedTab" text="Formatted">
+                   <HTMLEditor fx:id="htmlWysiwygEditor" prefHeight="300.0" />
+               </Tab>
+           </tabs>
+       </TabPane>
 
        <Label text="Mails Per Hour:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
        <HBox GridPane.columnIndex="1" GridPane.rowIndex="6" >

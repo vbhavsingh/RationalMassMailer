@@ -1,0 +1,9 @@
+target/
+.classpath
+.project
+.settings/
+.vscode/
+*.lck
+rational-massmail.txt
+.DS_Store
+dependency-reduced-pom.xml

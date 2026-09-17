@@ -26,6 +26,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
@@ -72,7 +74,15 @@ public class MainScreenController implements Initializable {
    /* @FXML
     TextArea emailBody;*/
     @FXML
+    TabPane mailBodyTabPane;
+    @FXML
+    Tab htmlCodeTab;
+    @FXML
+    Tab formattedTab;
+    @FXML
     TextArea htmlEmailBody;
+    @FXML
+    HTMLEditor htmlWysiwygEditor;
     @FXML
     TextField mailsPerHour;
     @FXML
@@ -127,7 +137,23 @@ public class MainScreenController implements Initializable {
        /* emailBody.textProperty().bindBidirectional(details.emailBodyProperty());*/
         htmlEmailBody.textProperty().bindBidirectional(details.htmlEmailBodyProperty());
         htmlEmailBody.disableProperty().bindBidirectional(lockScreen);
-        
+        htmlWysiwygEditor.disableProperty().bindBidirectional(lockScreen);
+        htmlWysiwygEditor.setHtmlText(details.getHtmlEmailBody());
+
+        //Keep the WYSIWYG "Formatted" view and the raw "HTML Code" view in sync
+        //whenever the user switches between them, since HTMLEditor has no
+        //observable text property to bind directly.
+        mailBodyTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+                if (newTab == formattedTab) {
+                    htmlWysiwygEditor.setHtmlText(details.getHtmlEmailBody());
+                } else if (newTab == htmlCodeTab) {
+                    details.setHtmlEmailBody(htmlWysiwygEditor.getHtmlText());
+                }
+            }
+        });
+
         contactFilePath.textProperty().bindBidirectional(details.contactFilePathProperty());
         attachedFileNames.textProperty().bindBidirectional(details.attachedFileNamesProperty());
         emailSubject.textProperty().bindBidirectional(details.emailSubjectProperty());
@@ -341,7 +367,7 @@ public class MainScreenController implements Initializable {
         if (file != null) {
             try {
                 String content = Utilities.readTextFile(file);
-                details.setHtmlEmailBody(content);
+                showFormattedPreview(content);
                 msgBoard.appendMessage("Loaded mail template from file: " + file.getPath());
                 LOGGER.info("Loaded mail template from file: " + file.getPath());
             } catch (IOException ex) {
@@ -350,6 +376,16 @@ public class MainScreenController implements Initializable {
                 msgBoard.appendMessage(message);
             }
         }
+    }
+
+    /**
+     * Sets the mail body and immediately switches to the "Formatted" tab so
+     * the rendered HTML is visible right away.
+     */
+    private void showFormattedPreview(String htmlContent) {
+        details.setHtmlEmailBody(htmlContent);
+        htmlWysiwygEditor.setHtmlText(htmlContent);
+        mailBodyTabPane.getSelectionModel().select(formattedTab);
     }
 
     /**
@@ -362,7 +398,7 @@ public class MainScreenController implements Initializable {
     protected void showSampleTemplate(ActionEvent event) {
         try {
             String content = Utilities.readClasspathResource(getClass(), "/templates/sample-email-template.html");
-            details.setHtmlEmailBody(content);
+            showFormattedPreview(content);
             msgBoard.appendMessage("Loaded the built-in sample email template.");
             LOGGER.info("Loaded the built-in sample email template.");
         } catch (IOException ex) {
