@@ -46,6 +46,20 @@ public class SmtpSessionService {
         return details.geEmailUserName();
     }
 
+    /**
+     * Who "Send Test Email" should deliver to. For Gmail/Yahoo the From
+     * address is the user's own inbox, so sending a test to yourself works.
+     * SMTP2GO "From" addresses (e.g. admin@, noreply@) are frequently
+     * send-only and do not accept incoming mail, so SMTP2GO requires a
+     * separate, real recipient address for the test send.
+     */
+    public static String getTestRecipient(MailDetails details) {
+        if (Constants.MAIL_PROVIDER_SMTP2GO.equals(details.getMailProvider())) {
+            return details.getSmtp2GoTestRecipient();
+        }
+        return details.geEmailUserName();
+    }
+
     private static Session buildGoogleSession(MailDetails details) {
         Properties mailProps = new Properties();
 
@@ -83,7 +97,8 @@ public class SmtpSessionService {
         mailProps.put("mail.smtp.host", "mail.smtp2go.com");
         mailProps.put("mail.from", details.getSmtp2GoFromEmail());
         mailProps.put("mail.smtp.starttls.enable", "true");
-        mailProps.put("mail.smtp.port", "2525");
+        String port = details.getSmtp2GoPort();
+        mailProps.put("mail.smtp.port", (port == null || port.trim().isEmpty()) ? Constants.SMTP2GO_DEFAULT_PORT : port.trim());
         mailProps.put("mail.smtp.auth", "true");
         mailProps.put("mail.smtp.connectiontimeout", "60000");
         mailProps.put("mail.smtp.timeout", "60000");

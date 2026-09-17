@@ -80,6 +80,14 @@ public class MainScreenController implements Initializable {
     @FXML
     TextField smtp2GoFromEmail;
     @FXML
+    Label smtp2GoPortLabel;
+    @FXML
+    TextField smtp2GoPort;
+    @FXML
+    Label smtp2GoTestRecipientLabel;
+    @FXML
+    TextField smtp2GoTestRecipient;
+    @FXML
     TextField emailSubject;
    /* @FXML
     TextArea emailBody;*/
@@ -143,6 +151,13 @@ public class MainScreenController implements Initializable {
 
         smtp2GoFromEmail.textProperty().bindBidirectional(details.smtp2GoFromEmailProperty());
         smtp2GoFromEmail.disableProperty().bindBidirectional(lockScreen);
+
+        smtp2GoPort.textProperty().bindBidirectional(details.smtp2GoPortProperty());
+        smtp2GoPort.disableProperty().bindBidirectional(lockScreen);
+
+        smtp2GoTestRecipient.textProperty().bindBidirectional(details.smtp2GoTestRecipientProperty());
+        smtp2GoTestRecipient.disableProperty().bindBidirectional(lockScreen);
+
         updateProviderFields();
 
         emailSubject.textProperty().bindBidirectional(details.emailSubjectProperty());
@@ -205,6 +220,7 @@ public class MainScreenController implements Initializable {
                 updateProviderFields();
                 validateEmailUserName();
                 validateSmtp2GoFromEmail();
+                validateSmtp2GoTestRecipient();
                 showMessages();
             }
 
@@ -214,6 +230,15 @@ public class MainScreenController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 validateSmtp2GoFromEmail();
+                showMessages();
+            }
+
+        });
+
+        smtp2GoTestRecipient.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                validateSmtp2GoTestRecipient();
                 showMessages();
             }
 
@@ -253,7 +278,30 @@ public class MainScreenController implements Initializable {
 					}
 				}
 				mailsPerHour.setText(newValue);
-				
+
+			}
+		});
+
+        smtp2GoPort.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				String digitsOnly = newValue.replaceAll("[^\\d]", "");
+				if (digitsOnly.length() > 5) {
+					digitsOnly = digitsOnly.substring(0, 5);
+				}
+				if (!digitsOnly.isEmpty()) {
+					int val = Integer.parseInt(digitsOnly);
+					if (val == 0) {
+						digitsOnly = "1";
+					}
+					if (val > 65535) {
+						digitsOnly = "65535";
+					}
+				}
+				if (!digitsOnly.equals(newValue)) {
+					smtp2GoPort.setText(digitsOnly);
+				}
 			}
 		});
     }
@@ -303,6 +351,26 @@ public class MainScreenController implements Initializable {
     }
 
     /**
+     * Validates the "Send Test To" field, which only applies when SMTP2GO
+     * is selected: SMTP2GO "From" addresses are frequently send-only, so
+     * the test send needs a separate, real recipient address.
+     */
+    private void validateSmtp2GoTestRecipient() {
+        if (!Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue())) {
+            smtp2GoTestRecipient.setStyle("");
+            errorMessages.remove(smtp2GoTestRecipient.getId());
+            return;
+        }
+        if (!smtp2GoTestRecipient.getText().matches(Constants.EMAIL_REGEX_PATERN)) {
+            smtp2GoTestRecipient.setStyle("-fx-text-fill: red;");
+            errorMessages.put(smtp2GoTestRecipient.getId(), "Provide a real, valid email id to receive the test send.");
+        } else {
+            smtp2GoTestRecipient.setStyle("");
+            errorMessages.remove(smtp2GoTestRecipient.getId());
+        }
+    }
+
+    /**
      * "From Email ID" and "Email Password" mean something different for
      * SMTP2GO (an SMTP account username/password, unrelated to the actual
      * sender mailbox) than for Gmail/Yahoo (the mailbox's own login), so
@@ -322,6 +390,16 @@ public class MainScreenController implements Initializable {
         smtp2GoFromEmailLabel.setManaged(isSmtp2Go);
         smtp2GoFromEmail.setVisible(isSmtp2Go);
         smtp2GoFromEmail.setManaged(isSmtp2Go);
+
+        smtp2GoPortLabel.setVisible(isSmtp2Go);
+        smtp2GoPortLabel.setManaged(isSmtp2Go);
+        smtp2GoPort.setVisible(isSmtp2Go);
+        smtp2GoPort.setManaged(isSmtp2Go);
+
+        smtp2GoTestRecipientLabel.setVisible(isSmtp2Go);
+        smtp2GoTestRecipientLabel.setManaged(isSmtp2Go);
+        smtp2GoTestRecipient.setVisible(isSmtp2Go);
+        smtp2GoTestRecipient.setManaged(isSmtp2Go);
     }
 
     /**
@@ -497,7 +575,7 @@ public class MainScreenController implements Initializable {
     @FXML
     protected void sendTestEmail(ActionEvent event) throws IOException {
         try {
-        	String testRecipient = SmtpSessionService.getFromAddress(details);
+        	String testRecipient = SmtpSessionService.getTestRecipient(details);
         	mainScreenLiveMessage.setStyle("-fx-fill: blue;");
         	mainScreenLiveMessageProperty.set("Sending test mail to : "+testRecipient);
         	Thread.sleep(1000);

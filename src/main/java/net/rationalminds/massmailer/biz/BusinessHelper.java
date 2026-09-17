@@ -149,15 +149,16 @@ public class BusinessHelper {
         }
 
         String fromAddress = SmtpSessionService.getFromAddress(details);
+        String testRecipient = SmtpSessionService.getTestRecipient(details);
         mail.setFrom(new InternetAddress(fromAddress));
         mail.setSubject(mailSubject);
-        InternetAddress to = new InternetAddress(fromAddress);
+        InternetAddress to = new InternetAddress(testRecipient);
         mail.setRecipient(Message.RecipientType.TO, to);
         mail.setContent(content);
-        msgBoard.appendMessage("Sending test mail to: " + fromAddress);
-        LOGGER.info("Sending test mail to: " + fromAddress);
+        msgBoard.appendMessage("Sending test mail to: " + testRecipient);
+        LOGGER.info("Sending test mail to: " + testRecipient);
         Transport.send(mail);
-        msgBoard.appendMessage("Test mail is successfully sent to: " + fromAddress);
-        LOGGER.info("\"Test mail is successfully sent to: \" + fromAddress");
+        msgBoard.appendMessage("Test mail is successfully sent to: " + testRecipient);
+        LOGGER.info("\"Test mail is successfully sent to: \" + testRecipient");
     }
 }

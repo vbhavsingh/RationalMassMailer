@@ -36,15 +36,21 @@
        <Label fx:id="smtp2GoFromEmailLabel" text="SMTP2GO From Email*:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
        <TextField fx:id="smtp2GoFromEmail" promptText="the verified sender address SMTP2GO should send mail from" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-       <Label text="Email Subject*:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-       <TextField fx:id="emailSubject" promptText="you can use csv headers as replacement text in subject too" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+       <Label fx:id="smtp2GoPortLabel" text="SMTP2GO Port:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+       <TextField fx:id="smtp2GoPort" maxWidth="80.0" promptText="2525" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-       <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="6">
+       <Label fx:id="smtp2GoTestRecipientLabel" text="Send Test To*:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+       <TextField fx:id="smtp2GoTestRecipient" promptText="a real inbox to receive the test email (SMTP2GO's From address may be send-only)" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+       <Label text="Email Subject*:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+       <TextField fx:id="emailSubject" promptText="you can use csv headers as replacement text in subject too" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+       <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="8">
            <Label text="Formatted Mail*:" />
            <Button fx:id="importTemplateButton" onAction="#importTemplate" text="Load Template" />
            <Button fx:id="showSampleButton" onAction="#showSampleTemplate" text="Show Sample" />
        </VBox>
-       <TabPane fx:id="mailBodyTabPane" prefHeight="320.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+       <TabPane fx:id="mailBodyTabPane" prefHeight="320.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="8">
            <tabs>
                <Tab fx:id="htmlCodeTab" text="HTML Code">
                    <TextArea fx:id="htmlEmailBody" prefHeight="300.0" />
@@ -55,21 +61,21 @@
            </tabs>
        </TabPane>
 
-       <Label text="Mails Per Hour:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-       <HBox GridPane.columnIndex="1" GridPane.rowIndex="7" >
+       <Label text="Mails Per Hour:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+       <HBox GridPane.columnIndex="1" GridPane.rowIndex="9" >
        	<TextField fx:id="mailsPerHour" maxWidth="50.0" text="60"/>
        	<Label text="Minimum:1 , Maximum:999. Editable while send is in progress." alignment="BOTTOM_CENTER" style=" -fx-padding: 10;-fx-text-fill: #062FF9;"/>
        </HBox>
 
 
-       <Button fx:id="chooseContactsFileButton" onAction="#chooseContactsFile" prefWidth="140.0" text="Open contact file*(csv)" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-       <Text fx:id="contactFilePath" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="8" />
+       <Button fx:id="chooseContactsFileButton" onAction="#chooseContactsFile" prefWidth="140.0" text="Open contact file*(csv)" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+       <Text fx:id="contactFilePath" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="10" />
 
-       <Button fx:id="chosseAttachmentsButton" onAction="#chosseAttachments" prefWidth="140.0" text="Select Attachments" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-       <Text fx:id="attachedFileNames" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="9" />
+       <Button fx:id="chosseAttachmentsButton" onAction="#chosseAttachments" prefWidth="140.0" text="Select Attachments" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+       <Text fx:id="attachedFileNames" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="11" />
 
-       <Button fx:id="testMailButton" prefWidth="140.0" text="Send Test Email" disable="${ emailUserName.text.empty || emailPassword.text.empty || emailSubject.text.empty || disableApplication.text.empty}" onAction="#sendTestEmail" GridPane.columnIndex="0" GridPane.rowIndex="10" />
-       <HBox GridPane.columnIndex="1" GridPane.rowIndex="10" >
+       <Button fx:id="testMailButton" prefWidth="140.0" text="Send Test Email" disable="${ emailUserName.text.empty || emailPassword.text.empty || emailSubject.text.empty || disableApplication.text.empty}" onAction="#sendTestEmail" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+       <HBox GridPane.columnIndex="1" GridPane.rowIndex="12" >
         	<Button fx:id="massMailButton" disable="${ emailUserName.text.empty || emailPassword.text.empty || emailSubject.text.empty || contactFilePath.text.empty || disableApplication.text.empty}" onAction="#sendMassEmails" prefWidth="140.0" text="Send Emails" />
        		<Separator cacheShape="false" centerShape="false" focusTraversable="false" layoutX="91.0" layoutY="83.0" prefHeight="7.0" prefWidth="13.0" scaleShape="false" visible="false" />
 
@@ -79,7 +85,7 @@
        		<Button fx:id="resumeMailButton" onAction="#resumeMailSend" prefWidth="140.0" text="Resume" />
        </HBox>
 
-       <HBox GridPane.columnIndex="1" GridPane.rowIndex="11">
+       <HBox GridPane.columnIndex="1" GridPane.rowIndex="13">
             <Text style="-fx-fill: red;" fx:id="mainScreenLiveMessage" />
             <Separator cacheShape="false" centerShape="false" focusTraversable="false" layoutX="91.0" layoutY="83.0" prefHeight="7.0" prefWidth="13.0" scaleShape="false" visible="false" />
             <ProgressBar fx:id="progressBar" GridPane.columnIndex="1" visible="false" />

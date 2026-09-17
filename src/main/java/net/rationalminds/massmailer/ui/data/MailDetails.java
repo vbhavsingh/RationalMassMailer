@@ -27,6 +27,10 @@ public class MailDetails {
 
     private final StringProperty smtp2GoFromEmail;
 
+    private final StringProperty smtp2GoTestRecipient;
+
+    private final StringProperty smtp2GoPort;
+
     private final StringProperty emailSubject;
     
     private final StringProperty htmlEmailBody;
@@ -46,6 +50,8 @@ public class MailDetails {
         this.emailPassword = new SimpleStringProperty("");
         this.mailProvider = new SimpleStringProperty(Constants.MAIL_PROVIDER_AUTO);
         this.smtp2GoFromEmail = new SimpleStringProperty("");
+        this.smtp2GoTestRecipient = new SimpleStringProperty("");
+        this.smtp2GoPort = new SimpleStringProperty(Constants.SMTP2GO_DEFAULT_PORT);
         this.emailSubject = new SimpleStringProperty("");
         this.htmlEmailBody = new SimpleStringProperty("Paste formatted HTML content here and delete this message."
         		+ "\n\n"
@@ -108,6 +114,30 @@ public class MailDetails {
 
     public StringProperty smtp2GoFromEmailProperty() {
         return smtp2GoFromEmail;
+    }
+
+    public String getSmtp2GoTestRecipient() {
+        return smtp2GoTestRecipient.get();
+    }
+
+    public void setSmtp2GoTestRecipient(String smtp2GoTestRecipient) {
+        this.smtp2GoTestRecipient.set(smtp2GoTestRecipient);
+    }
+
+    public StringProperty smtp2GoTestRecipientProperty() {
+        return smtp2GoTestRecipient;
+    }
+
+    public String getSmtp2GoPort() {
+        return smtp2GoPort.get();
+    }
+
+    public void setSmtp2GoPort(String smtp2GoPort) {
+        this.smtp2GoPort.set(smtp2GoPort);
+    }
+
+    public StringProperty smtp2GoPortProperty() {
+        return smtp2GoPort;
     }
 
     public String getEmailSubject() {

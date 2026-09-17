@@ -21,6 +21,8 @@ public class Constants {
 
     public static final String MAIL_PROVIDER_SMTP2GO = "SMTP2GO";
 
+    public static final String SMTP2GO_DEFAULT_PORT = "2525";
+
     public static final int MSG_BOARD_MAX_LINES=5000;
     
     public static MassSenderUI THIS_APP;
