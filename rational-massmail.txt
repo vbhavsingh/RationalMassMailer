@@ -1,1 +1,2 @@
-Sep 17,2026 10:44:04 <INFO> : Starting mass email service
+Sep 17,2026 10:55:47 <INFO> : Starting mass email service
+Sep 17,2026 10:55:52 <INFO> : Loaded the built-in sample email template.

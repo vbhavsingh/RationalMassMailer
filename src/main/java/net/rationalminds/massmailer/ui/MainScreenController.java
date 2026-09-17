@@ -86,6 +86,10 @@ public class MainScreenController implements Initializable {
     @FXML
     Button chosseAttachmentsButton;
     @FXML
+    Button importTemplateButton;
+    @FXML
+    Button showSampleButton;
+    @FXML
     Button massMailButton;
     @FXML
     Button testMailButton;
@@ -136,6 +140,8 @@ public class MainScreenController implements Initializable {
         
         chooseContactsFileButton.disableProperty().bindBidirectional(lockScreen);
         chosseAttachmentsButton.disableProperty().bindBidirectional(lockScreen);
+        importTemplateButton.disableProperty().bindBidirectional(lockScreen);
+        showSampleButton.disableProperty().bindBidirectional(lockScreen);
         
         mainScreenLiveMessage.textProperty().bind(mainScreenLiveMessageProperty);
         
@@ -314,6 +320,55 @@ public class MainScreenController implements Initializable {
                 details.setAttachedFileNames(fileNames);
                 details.setAttachments(files);
             }
+        }
+    }
+
+    /**
+     *
+     * @param event
+     */
+    @FXML
+    protected void importTemplate(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("open mail template (txt or html)");
+        chooser.setInitialDirectory(new File(Utilities.getOpenDialogInitialDir()));
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("text/html templates (*.txt, *.html, *.htm)", "*.txt", "*.html", "*.htm"),
+                new FileChooser.ExtensionFilter("All files", "*.*")
+        );
+        File file = chooser.showOpenDialog(new Stage());
+
+        if (file != null) {
+            try {
+                String content = Utilities.readTextFile(file);
+                details.setHtmlEmailBody(content);
+                msgBoard.appendMessage("Loaded mail template from file: " + file.getPath());
+                LOGGER.info("Loaded mail template from file: " + file.getPath());
+            } catch (IOException ex) {
+                String message = "Could not read template file " + file.getName() + ": " + ex.getMessage();
+                LOGGER.log(Level.WARNING, message);
+                msgBoard.appendMessage(message);
+            }
+        }
+    }
+
+    /**
+     * Loads the built-in sample email so users can see what a properly
+     * formatted mail template looks like in the text area.
+     *
+     * @param event
+     */
+    @FXML
+    protected void showSampleTemplate(ActionEvent event) {
+        try {
+            String content = Utilities.readClasspathResource(getClass(), "/templates/sample-email-template.html");
+            details.setHtmlEmailBody(content);
+            msgBoard.appendMessage("Loaded the built-in sample email template.");
+            LOGGER.info("Loaded the built-in sample email template.");
+        } catch (IOException ex) {
+            String message = "Could not load sample template: " + ex.getMessage();
+            LOGGER.log(Level.WARNING, message);
+            msgBoard.appendMessage(message);
         }
     }
 

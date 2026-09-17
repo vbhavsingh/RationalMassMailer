@@ -7,6 +7,9 @@ package net.rationalminds.massmailer.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -112,6 +115,19 @@ public class Utilities {
             r = days + d + r;
         }
         return r;
+    }
+
+    public static String readTextFile(File file) throws IOException {
+        return new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+    }
+
+    public static String readClasspathResource(Class<?> anchor, String resourcePath) throws IOException {
+        try (InputStream in = anchor.getResourceAsStream(resourcePath)) {
+            if (in == null) {
+                throw new IOException("Resource not found: " + resourcePath);
+            }
+            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        }
     }
 
     public static int nthOccurrence(String text, char c, int occurrence) {
