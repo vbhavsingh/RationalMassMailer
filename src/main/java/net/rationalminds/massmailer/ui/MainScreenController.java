@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -69,6 +70,10 @@ public class MainScreenController implements Initializable {
     TextField emailUserName;
     @FXML
     TextField emailPassword;
+    @FXML
+    Label smtp2GoFromEmailLabel;
+    @FXML
+    TextField smtp2GoFromEmail;
     @FXML
     TextField emailSubject;
    /* @FXML
@@ -130,7 +135,11 @@ public class MainScreenController implements Initializable {
         
         emailPassword.textProperty().bindBidirectional(details.emailPasswordProperty());
         emailPassword.disableProperty().bindBidirectional(lockScreen);
-        
+
+        smtp2GoFromEmail.textProperty().bindBidirectional(details.smtp2GoFromEmailProperty());
+        smtp2GoFromEmail.disableProperty().bindBidirectional(lockScreen);
+        updateSmtp2GoFieldVisibility();
+
         emailSubject.textProperty().bindBidirectional(details.emailSubjectProperty());
         emailSubject.disableProperty().bindBidirectional(lockScreen);
         
@@ -188,7 +197,18 @@ public class MainScreenController implements Initializable {
         mailProvider.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                updateSmtp2GoFieldVisibility();
                 validateEmailUserName();
+                validateSmtp2GoFromEmail();
+                showMessages();
+            }
+
+        });
+
+        smtp2GoFromEmail.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                validateSmtp2GoFromEmail();
                 showMessages();
             }
 
@@ -234,23 +254,59 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Validates the "From Email ID" field. SMTP2GO can relay mail for any
-     * sender domain, so it is checked against a generic email pattern instead
-     * of the Gmail/Yahoo-only pattern used for the auto-detected providers.
+     * Validates the "From Email ID" field. For SMTP2GO this is the SMTP
+     * account username (e.g. an account or domain name, not necessarily an
+     * email address), so it is only required to be non-blank; the actual
+     * sender address is validated separately in {@link #validateSmtp2GoFromEmail()}.
      */
     private void validateEmailUserName() {
-        String pattern = Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue())
-                ? Constants.EMAIL_REGEX_PATERN : Constants.PERMITTED_EMAIL_PATTERN;
-        if (!emailUserName.getText().matches(pattern)) {
+        boolean isSmtp2Go = Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue());
+        boolean valid = isSmtp2Go
+                ? !emailUserName.getText().trim().isEmpty()
+                : emailUserName.getText().matches(Constants.PERMITTED_EMAIL_PATTERN);
+        if (!valid) {
             emailUserName.setStyle("-fx-text-fill: red;");
-            String message = Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue())
-                    ? "Provide a valid, full email id."
+            String message = isSmtp2Go
+                    ? "Provide your SMTP2GO username."
                     : "Provide valid Gmail or Yahoo id! Always use full email id.";
             errorMessages.put(emailUserName.getId(), message);
         } else {
             emailUserName.setStyle("");
             errorMessages.remove(emailUserName.getId());
         }
+    }
+
+    /**
+     * Validates the "SMTP2GO From Email" field, which only applies when
+     * SMTP2GO is the selected provider: SMTP2GO relays mail on behalf of any
+     * verified sender address, which is unrelated to the SMTP account
+     * username entered above.
+     */
+    private void validateSmtp2GoFromEmail() {
+        if (!Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue())) {
+            smtp2GoFromEmail.setStyle("");
+            errorMessages.remove(smtp2GoFromEmail.getId());
+            return;
+        }
+        if (!smtp2GoFromEmail.getText().matches(Constants.EMAIL_REGEX_PATERN)) {
+            smtp2GoFromEmail.setStyle("-fx-text-fill: red;");
+            errorMessages.put(smtp2GoFromEmail.getId(), "Provide a valid, full email id to send from via SMTP2GO.");
+        } else {
+            smtp2GoFromEmail.setStyle("");
+            errorMessages.remove(smtp2GoFromEmail.getId());
+        }
+    }
+
+    /**
+     * The SMTP2GO From Email field only makes sense when SMTP2GO is the
+     * selected provider, so it is hidden the rest of the time.
+     */
+    private void updateSmtp2GoFieldVisibility() {
+        boolean isSmtp2Go = Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue());
+        smtp2GoFromEmailLabel.setVisible(isSmtp2Go);
+        smtp2GoFromEmailLabel.setManaged(isSmtp2Go);
+        smtp2GoFromEmail.setVisible(isSmtp2Go);
+        smtp2GoFromEmail.setManaged(isSmtp2Go);
     }
 
     /**

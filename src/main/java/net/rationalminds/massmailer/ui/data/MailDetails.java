@@ -25,6 +25,8 @@ public class MailDetails {
 
     private final StringProperty mailProvider;
 
+    private final StringProperty smtp2GoFromEmail;
+
     private final StringProperty emailSubject;
     
     private final StringProperty htmlEmailBody;
@@ -43,6 +45,7 @@ public class MailDetails {
         this.emailUserName = new SimpleStringProperty("");
         this.emailPassword = new SimpleStringProperty("");
         this.mailProvider = new SimpleStringProperty(Constants.MAIL_PROVIDER_AUTO);
+        this.smtp2GoFromEmail = new SimpleStringProperty("");
         this.emailSubject = new SimpleStringProperty("");
         this.htmlEmailBody = new SimpleStringProperty("Paste formatted HTML content here and delete this message."
         		+ "\n\n"
@@ -93,6 +96,18 @@ public class MailDetails {
 
     public StringProperty mailProviderProperty() {
         return mailProvider;
+    }
+
+    public String getSmtp2GoFromEmail() {
+        return smtp2GoFromEmail.get();
+    }
+
+    public void setSmtp2GoFromEmail(String smtp2GoFromEmail) {
+        this.smtp2GoFromEmail.set(smtp2GoFromEmail);
+    }
+
+    public StringProperty smtp2GoFromEmailProperty() {
+        return smtp2GoFromEmail;
     }
 
     public String getEmailSubject() {

@@ -85,6 +85,7 @@ public class MassEmailService implements Runnable {
         MimeMultipart content = null;
         
         SMTPMessage mail = new SMTPMessage(SmtpSessionService.getEmailSession(details));
+        mail.setFrom(new InternetAddress(SmtpSessionService.getFromAddress(details)));
         msgBoard.appendMessage("Created email session with provided credentials.");
         int count = 1;
         int failed = 0;

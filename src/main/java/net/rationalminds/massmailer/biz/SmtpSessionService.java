@@ -33,6 +33,19 @@ public class SmtpSessionService {
         return null;
     }
 
+    /**
+     * The address mail should be sent "From". For SMTP2GO this is distinct
+     * from the SMTP login (the account username, e.g. an account/domain
+     * name rather than a mailbox); for Gmail/Yahoo the login is itself the
+     * mailbox address.
+     */
+    public static String getFromAddress(MailDetails details) {
+        if (Constants.MAIL_PROVIDER_SMTP2GO.equals(details.getMailProvider())) {
+            return details.getSmtp2GoFromEmail();
+        }
+        return details.geEmailUserName();
+    }
+
     private static Session buildGoogleSession(MailDetails details) {
         Properties mailProps = new Properties();
 
@@ -68,9 +81,9 @@ public class SmtpSessionService {
 
         mailProps.put("mail.transport.protocol", "smtp");
         mailProps.put("mail.smtp.host", "mail.smtp2go.com");
-        mailProps.put("mail.from", details.geEmailUserName());
+        mailProps.put("mail.from", details.getSmtp2GoFromEmail());
         mailProps.put("mail.smtp.starttls.enable", "true");
-        mailProps.put("mail.smtp.port", "587");
+        mailProps.put("mail.smtp.port", "2525");
         mailProps.put("mail.smtp.auth", "true");
         mailProps.put("mail.smtp.connectiontimeout", "60000");
         mailProps.put("mail.smtp.timeout", "60000");
