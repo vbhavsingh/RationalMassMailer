@@ -186,6 +186,29 @@
 							<type>PKG</type>
 						</configuration>
 					</plugin>
+
+					<!-- jpackage always names its output "<name>-<appVersion>.pkg";
+					     drop the version suffix so it's just RationalMassMailer.pkg. -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>3.1.0</version>
+						<executions>
+							<execution>
+								<id>rename-pkg</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<move file="${project.build.directory}/installer/${project.artifactId}-${project.version}.pkg"
+											  tofile="${project.build.directory}/installer/${project.artifactId}.pkg" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
