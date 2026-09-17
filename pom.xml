@@ -15,6 +15,8 @@
 		<javafx.version>25.0.4</javafx.version>
 		<app.mainClass>net.rationalminds.massmailer.ui.MassSenderUI</app.mainClass>
 		<jar.mainClass>net.rationalminds.massmailer.ui.Launcher</jar.mainClass>
+		<win.icon>${project.basedir}/pluto-win-exe.ico</win.icon>
+		<mac.icon>${project.basedir}/pluto-mac-app.icns</mac.icon>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -116,6 +118,77 @@
 				<javafx.platform>linux-aarch64</javafx.platform>
 			</properties>
 		</profile>
+
+		<!-- jpackage can only produce a .pkg when running on macOS itself
+		     (it shells out to native Apple packaging tools), so this build
+		     step only activates here. On Windows/Linux, `mvn package` still
+		     produces the jar and the .exe, just not the .pkg. -->
+		<profile>
+			<id>mac-pkg</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<!-- jpackage bundles its whole input directory into the app
+					     image, so give it a clean folder containing only the
+					     shaded jar rather than all of target/. -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>3.3.1</version>
+						<executions>
+							<execution>
+								<id>copy-jpackage-input</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/jpackage-input</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${project.build.directory}</directory>
+											<includes>
+												<include>${project.artifactId}.jar</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.panteleyev</groupId>
+						<artifactId>jpackage-maven-plugin</artifactId>
+						<version>1.8.0</version>
+						<executions>
+							<execution>
+								<id>build-pkg</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jpackage</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<name>${project.name}</name>
+							<appVersion>${project.version}</appVersion>
+							<vendor>rationalminds.net</vendor>
+							<destination>${project.build.directory}/installer</destination>
+							<input>${project.build.directory}/jpackage-input</input>
+							<mainJar>${project.artifactId}.jar</mainJar>
+							<mainClass>${jar.mainClass}</mainClass>
+							<icon>${mac.icon}</icon>
+							<type>PKG</type>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 	<build>
 		<plugins>
@@ -130,6 +203,9 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.4.2</version>
 				<configuration>
+					<!-- Keep the pre-shade thin jar out of target/'s root so target/
+					     only ever holds the final shaded jar alongside the exe/pkg. -->
+					<outputDirectory>${project.build.directory}/thin-jar</outputDirectory>
 					<archive>
 						<manifest>
 							<mainClass>${jar.mainClass}</mainClass>
@@ -176,6 +252,50 @@
 				<configuration>
 					<mainClass>${app.mainClass}</mainClass>
 				</configuration>
+			</plugin>
+
+			<!-- Wraps the shaded jar into a Windows .exe. Buildable on any OS
+			     (launch4j ships prebuilt native stubs); running the result
+			     still requires a Java 25+ runtime on the target Windows machine. -->
+			<plugin>
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>2.7.0</version>
+				<executions>
+					<execution>
+						<id>build-exe</id>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>gui</headerType>
+							<jar>${project.build.directory}/${project.artifactId}.jar</jar>
+							<outfile>${project.build.directory}/${project.artifactId}.exe</outfile>
+							<errTitle>${project.name}</errTitle>
+							<icon>${win.icon}</icon>
+							<singleInstance>
+								<mutexName>rationalminds_mass_email_sender</mutexName>
+								<windowTitle>Rational Mass Mailer</windowTitle>
+							</singleInstance>
+							<jre>
+								<minVersion>25</minVersion>
+							</jre>
+							<versionInfo>
+								<fileVersion>${project.version}.0.0</fileVersion>
+								<txtFileVersion>${project.version}</txtFileVersion>
+								<fileDescription>${project.name}</fileDescription>
+								<copyright>rationalminds.net</copyright>
+								<productVersion>${project.version}.0.0</productVersion>
+								<txtProductVersion>${project.version}</txtProductVersion>
+								<productName>${project.name}</productName>
+								<companyName>rationalminds</companyName>
+								<internalName>${project.artifactId}</internalName>
+								<originalFilename>${project.artifactId}.exe</originalFilename>
+							</versionInfo>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
