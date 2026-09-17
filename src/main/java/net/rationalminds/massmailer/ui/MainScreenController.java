@@ -542,22 +542,16 @@ public class MainScreenController implements Initializable {
 
     /**
      * Applies attachments extracted from a loaded template bundle (images
-     * referenced by the HTML plus any other bundled files), capping at the
-     * same 3-file limit as manually selected attachments.
+     * referenced by the HTML plus any other bundled files). Unlike manually
+     * selected attachments, bundled files are not capped at 3 - a template
+     * bundle is expected to carry as many images as its design needs.
      */
     private void applyBundleAttachments(List<File> files) {
         if (files.isEmpty()) {
             return;
         }
-        List<File> capped = files.size() > 3 ? files.subList(0, 3) : files;
-        if (files.size() > 3) {
-            String message = "The template bundle contained " + files.size()
-                    + " embeddable files; only the first 3 are supported with this version, the rest were skipped.";
-            LOGGER.log(Level.WARNING, message);
-            msgBoard.appendMessage(message);
-        }
         String fileNames = "";
-        for (File f : capped) {
+        for (File f : files) {
             fileNames = "".equals(fileNames) ? f.getName() : fileNames + "," + f.getName();
             msgBoard.appendMessage("Attachment : " + f.getPath());
         }
@@ -566,7 +560,7 @@ public class MainScreenController implements Initializable {
         }
         attachedFileNames.setStyle("");
         details.setAttachedFileNames(fileNames);
-        details.setAttachments(capped);
+        details.setAttachments(files);
     }
 
     /**
