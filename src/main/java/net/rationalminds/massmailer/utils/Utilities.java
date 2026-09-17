@@ -130,6 +130,25 @@ public class Utilities {
         }
     }
 
+    /**
+     * Copies a bundled classpath resource to a new temp file with the same
+     * extension, so code that only knows how to work with {@code File}s
+     * (like {@link TemplateBundleLoader#load(File)}) can be reused for a
+     * resource shipped inside the jar.
+     */
+    public static File extractClasspathResourceToTempFile(Class<?> anchor, String resourcePath) throws IOException {
+        String suffix = resourcePath.contains(".") ? resourcePath.substring(resourcePath.lastIndexOf('.')) : "";
+        File tempFile = File.createTempFile("rationalmassmailer-resource-", suffix);
+        tempFile.deleteOnExit();
+        try (InputStream in = anchor.getResourceAsStream(resourcePath)) {
+            if (in == null) {
+                throw new IOException("Resource not found: " + resourcePath);
+            }
+            Files.copy(in, tempFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        }
+        return tempFile;
+    }
+
     public static int nthOccurrence(String text, char c, int occurrence) {
         if (text == null) {
             return 0;

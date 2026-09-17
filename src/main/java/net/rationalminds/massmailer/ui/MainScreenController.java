@@ -44,6 +44,7 @@ import net.rationalminds.massmailer.ui.data.MailDetails;
 import net.rationalminds.massmailer.ui.data.MessageBoard;
 import net.rationalminds.massmailer.utils.BadCsvFileException;
 import net.rationalminds.massmailer.utils.Constants;
+import net.rationalminds.massmailer.utils.TemplateBundleLoader;
 import net.rationalminds.massmailer.utils.Utilities;
 
 /**
@@ -505,9 +506,10 @@ public class MainScreenController implements Initializable {
     @FXML
     protected void importTemplate(ActionEvent event) {
         FileChooser chooser = new FileChooser();
-        chooser.setTitle("open mail template (txt or html)");
+        chooser.setTitle("open mail template (html/txt, or a zip/tar bundle with images)");
         chooser.setInitialDirectory(new File(Utilities.getOpenDialogInitialDir()));
         chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("template bundles (*.zip, *.tar, *.tar.gz, *.tgz)", "*.zip", "*.tar", "*.tar.gz", "*.tgz"),
                 new FileChooser.ExtensionFilter("text/html templates (*.txt, *.html, *.htm)", "*.txt", "*.html", "*.htm"),
                 new FileChooser.ExtensionFilter("All files", "*.*")
         );
@@ -515,8 +517,9 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             try {
-                String content = Utilities.readTextFile(file);
-                showFormattedPreview(content);
+                TemplateBundleLoader.TemplateBundle bundle = TemplateBundleLoader.load(file);
+                showFormattedPreview(bundle.html);
+                applyBundleAttachments(bundle.attachments);
                 msgBoard.appendMessage("Loaded mail template from file: " + file.getPath());
                 LOGGER.info("Loaded mail template from file: " + file.getPath());
             } catch (IOException ex) {
@@ -538,16 +541,47 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Loads the built-in sample email so users can see what a properly
-     * formatted mail template looks like in the text area.
+     * Applies attachments extracted from a loaded template bundle (images
+     * referenced by the HTML plus any other bundled files), capping at the
+     * same 3-file limit as manually selected attachments.
+     */
+    private void applyBundleAttachments(List<File> files) {
+        if (files.isEmpty()) {
+            return;
+        }
+        List<File> capped = files.size() > 3 ? files.subList(0, 3) : files;
+        if (files.size() > 3) {
+            String message = "The template bundle contained " + files.size()
+                    + " embeddable files; only the first 3 are supported with this version, the rest were skipped.";
+            LOGGER.log(Level.WARNING, message);
+            msgBoard.appendMessage(message);
+        }
+        String fileNames = "";
+        for (File f : capped) {
+            fileNames = "".equals(fileNames) ? f.getName() : fileNames + "," + f.getName();
+            msgBoard.appendMessage("Attachment : " + f.getPath());
+        }
+        if (fileNames.length() > 50) {
+            fileNames = fileNames.substring(0, 50) + "...";
+        }
+        attachedFileNames.setStyle("");
+        details.setAttachedFileNames(fileNames);
+        details.setAttachments(capped);
+    }
+
+    /**
+     * Loads the built-in sample email, including its images, so users can
+     * see what a properly formatted mail template looks like.
      *
      * @param event
      */
     @FXML
     protected void showSampleTemplate(ActionEvent event) {
         try {
-            String content = Utilities.readClasspathResource(getClass(), "/templates/sample-email-template.html");
-            showFormattedPreview(content);
+            File sampleZip = Utilities.extractClasspathResourceToTempFile(getClass(), "/templates/sample-email-template.zip");
+            TemplateBundleLoader.TemplateBundle bundle = TemplateBundleLoader.load(sampleZip);
+            showFormattedPreview(bundle.html);
+            applyBundleAttachments(bundle.attachments);
             msgBoard.appendMessage("Loaded the built-in sample email template.");
             LOGGER.info("Loaded the built-in sample email template.");
         } catch (IOException ex) {

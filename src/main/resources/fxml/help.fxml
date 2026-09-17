@@ -52,6 +52,9 @@
                 <Text wrappingWidth="770">
                    You can upload up to three files as attachments. If you attach images and want to show them inline at a specific position in your email you can put them as &lt;img src=&quot;cid:0&quot;&gt; , where 0 refers to the first image, 1 refers to 2nd image and 2 refers to the 3rd image.
                 </Text>
+                <Text wrappingWidth="770">
+                   You do not have to work out those cid numbers by hand. "Load Template" also accepts a .zip, .tar, .tar.gz or .tgz bundle containing your HTML/text template plus its images. Reference each image in your HTML by its normal filename, e.g. &lt;img src=&quot;banner.png&quot;&gt;, and RationalMassMailer will extract the images, attach them, and rewrite those references to the matching cid automatically. "Show Sample" demonstrates this with a bundled example.
+                </Text>
             </children>
             <padding>
                 <Insets left="10.0" right="10.0" top="10.0" />
