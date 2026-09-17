@@ -1,0 +1,42 @@
+How to Use RationalMassMailer with Gmail, Yahoo or SMTP2GO
+
+RationalMassMailer sends individual emails to recipients (not a single email with everyone in "To" or "BCC"), and supports placeholders, HTML formatting, and embedded images.
+
+1. Choosing a Mail Provider
+
+The "Mail Provider" dropdown controls how mail is actually sent:
+
+- Auto (Gmail/Yahoo): detects the provider from your "From Email ID" and signs in as that mailbox. Enter your full Gmail or Yahoo address in "From Email ID" and its password (or app password) in "Email Password". Emails are sent from, and a test email goes to, that same address.
+
+- SMTP2GO: relays mail through your SMTP2GO account and works with any sender domain, not just Gmail/Yahoo. Selecting it reveals extra fields:
+  - SMTP2GO Username / SMTP2GO Password: your SMTP2GO account's SMTP credentials, from app.smtp2go.com under Settings > SMTP Users. This username is an account identifier, not necessarily an email address.
+  - SMTP2GO From Email: the verified sender address (Settings > Sender Domains / Verified Senders in SMTP2GO) recipients will see mail arrive from. This is separate from the SMTP2GO Username above.
+  - SMTP2GO Port: defaults to 2525. Change only if your network blocks it; SMTP2GO also supports 8025, 587, 25 and 465.
+  - Send Test To: a real inbox you can check, since many SMTP2GO "From" addresses (e.g. admin@ or noreply@) are send-only and cannot receive mail.
+
+Always click "Send Test Email" after entering SMTP2GO details and before starting a mass send.
+
+2. Setting Up Your Contact List (CSV)
+
+The contact file must be a CSV with a header row. The header row is mandatory - if it is missing, the file is rejected. Do not use spaces in header names. A header named "Email" is mandatory. Example headers: FirstName, LastName, SendName, Email.
+
+3. Personalizing Subject and Body with Placeholders
+
+Use {{HeaderName}} in the Email Subject or the mail body to substitute a value from the matching CSV column for each recipient. Example: {{FirstName}} becomes "David" for a row where the FirstName column is "David".
+
+4. Writing a Formatted Mail Template
+
+"Formatted Mail" has two tabs. "HTML Code" is the raw source - content must be enclosed in <HTML></HTML>. "Formatted" renders that HTML as it will actually appear to recipients, with basic WYSIWYG editing tools (font, color, bold/italic, lists, alignment).
+
+Click "Show Sample" to load a complete, ready-made example (including images) into both tabs. Click "Load Template" to load your own template from a file: a plain .txt/.html file, or a bundle (see below).
+
+5. Embedding Images
+
+A) Template bundle (recommended): "Load Template" accepts a .zip, .tar, .tar.gz or .tgz archive containing your HTML/text template plus its images, so you never have to think about attachment numbering.
+  1. Write your template as a normal .html (or .txt) file, referencing each image by its ordinary filename, e.g. <img src="banner.png">.
+  2. Put that .html file and every image it references into one folder together.
+  3. Compress the contents of that folder into a single .zip or .tar/.tar.gz/.tgz file.
+  4. In RationalMassMailer, click "Load Template" and choose that archive. It extracts every image, attaches it, and rewrites your plain filenames to the correct inline src="cid:N" automatically, then shows the result in the "Formatted" tab.
+  A template bundle can carry as many images as needed (no 3-file limit, unlike manual attachments).
+
+B) Manual attachments: click "Select Attachments" to attach up to three files directly. To position an attached image inline yourself, reference it as <img src="cid:0">, where 0 is the first attached image, 1 the second, 2 the third, in selection order.

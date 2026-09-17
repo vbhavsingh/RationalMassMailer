@@ -9,27 +9,69 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.rationalminds.massmailer.ui.HelpController">
     <content>
-        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="780.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="780.0" spacing="6.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <children>
-                <Label prefHeight="17.0" prefWidth="400.0" text="How to Use Mass Mailer with Gmail, Yahoo or SMTP2GO">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Label>
+                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                    <Label prefHeight="17.0" prefWidth="600.0" text="How to Use Mass Mailer with Gmail, Yahoo or SMTP2GO">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <Button fx:id="copyToClipboardButton" onAction="#copyToClipboard" text="Copy Instructions to Clipboard" />
+                </HBox>
                 <Text wrappingWidth="770">
                     Mass Mailer sends out individual emails to recipients, thus providing human touch as recipients are not clubbed in "TO" or "BCC" field.
                 </Text>
                 <Text wrappingWidth="770">
-                    Using Mass Mailer is very easy. It requires your username, password and email details like text (plain text or HTML), subject and finally a CSV file containing details of contacts you need to send the emails.
+                    Using Mass Mailer is very easy. It requires your mail provider details, email details like text (plain text or HTML) and subject, and finally a CSV file containing the contacts you need to send the emails to.
+                </Text>
+
+                <Label prefHeight="17.0" prefWidth="600.0" text="1. Choosing a Mail Provider" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
+                <Text wrappingWidth="770">
+                    The "Mail Provider" dropdown controls how mail is actually sent:
                 </Text>
                 <Text wrappingWidth="770">
-                    Choose "Mail Provider" to pick how the mail is sent: "Auto (Gmail/Yahoo)" detects the provider from your From Email ID, while "SMTP2GO" relays mail through your SMTP2GO account and works with any sender domain. When using SMTP2GO, enter your SMTP2GO SMTP username and password in the From Email ID and Email Password fields.
+                    - "Auto (Gmail/Yahoo)": detects the provider from your "From Email ID" and signs in as that mailbox. Enter your full Gmail or Yahoo address in "From Email ID" and its password (or app password) in "Email Password". Emails are sent from, and a test email goes to, that same address.
                 </Text>
                 <Text wrappingWidth="770">
-                    Following is the sample of CSV contact file. The First row in this sample is the header row. 
-                    The header row is mandatory if header row is not found the contact file will be rejected and you will not be able to send emails. 
+                    - "SMTP2GO": relays mail through your SMTP2GO account and works with any sender domain, not just Gmail/Yahoo. SMTP2GO uses separate account credentials and a separate sender address, so selecting it reveals a few extra fields:
+                </Text>
+                <Text wrappingWidth="770">
+                    &#8226; SMTP2GO Username / SMTP2GO Password - your SMTP2GO account's SMTP credentials, from app.smtp2go.com under Settings &gt; SMTP Users. This username is an account identifier (e.g. a company or account name) and is not necessarily an email address, so it does not need to look like one.
+                </Text>
+                <Text wrappingWidth="770">
+                    &#8226; SMTP2GO From Email - the verified sender address (Settings &gt; Sender Domains / Verified Senders in SMTP2GO) that recipients will see mail arrive from. This is intentionally separate from the SMTP2GO Username above.
+                </Text>
+                <Text wrappingWidth="770">
+                    &#8226; SMTP2GO Port - defaults to 2525. Change it only if your network blocks that port; SMTP2GO also supports 8025, 587, 25 and 465.
+                </Text>
+                <Text wrappingWidth="770">
+                    &#8226; Send Test To - a real inbox you can check. Many SMTP2GO "From" addresses (e.g. admin@ or noreply@) are send-only and cannot receive mail, so "Send Test Email" delivers to this address instead of the From address.
+                </Text>
+                <Text wrappingWidth="770">
+                    Always click "Send Test Email" after entering your SMTP2GO details and before starting a mass send, to confirm your credentials and sender address are accepted.
+                </Text>
+
+                <Label prefHeight="17.0" prefWidth="600.0" text="2. Setting Up Your Contact List (CSV)" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
+                <Text wrappingWidth="770">
+                    Following is the sample of CSV contact file. The First row in this sample is the header row.
+                    The header row is mandatory if header row is not found the contact file will be rejected and you will not be able to send emails.
                     Do not use spaces in header text. Header name "Email is mandotry."
                 </Text>
                 <ImageView fitHeight="84.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
@@ -37,8 +79,17 @@
                         <Image url="@../csv-example.PNG" />
                     </image>
                 </ImageView>
+
+                <Label prefHeight="17.0" prefWidth="600.0" text="3. Personalizing Subject and Body with Placeholders" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
                 <Text wrappingWidth="770">
-                    After you upload your contact file you can use the header name to replace placeholders with data. e.g. 
+                    After you upload your contact file you can use the header name to replace placeholders with data. e.g.
                     if you use {{FirstName}}, it will be substituted with "David" in the first email and subsequently with the relevant column in every row in other emails.
                 </Text>
                 <Text wrappingWidth="780">
@@ -49,11 +100,56 @@
                         <Image url="@../mass-mail-example.PNG" />
                     </image>
                 </ImageView>
+
+                <Label prefHeight="17.0" prefWidth="600.0" text="4. Writing a Formatted Mail Template" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
                 <Text wrappingWidth="770">
-                   You can upload up to three files as attachments. If you attach images and want to show them inline at a specific position in your email you can put them as &lt;img src=&quot;cid:0&quot;&gt; , where 0 refers to the first image, 1 refers to 2nd image and 2 refers to the 3rd image.
+                    "Formatted Mail" has two tabs. "HTML Code" is the raw source you type or paste into - content must be enclosed in &lt;HTML&gt;&lt;/HTML&gt; for proper look and feel. "Formatted" renders that HTML as it will actually appear to recipients, with basic WYSIWYG editing tools (font, color, bold/italic, lists, alignment).
                 </Text>
                 <Text wrappingWidth="770">
-                   You do not have to work out those cid numbers by hand. "Load Template" also accepts a .zip, .tar, .tar.gz or .tgz bundle containing your HTML/text template plus its images. Reference each image in your HTML by its normal filename, e.g. &lt;img src=&quot;banner.png&quot;&gt;, and RationalMassMailer will extract the images, attach them, and rewrite those references to the matching cid automatically. "Show Sample" demonstrates this with a bundled example.
+                    Click "Show Sample" at any time to load a complete, ready-made example (including images - see below) into both tabs, so you can see what a finished template looks like before writing your own.
+                </Text>
+                <Text wrappingWidth="770">
+                    Click "Load Template" to load your own template from a file instead of typing it. It accepts a plain .txt or .html file, or a bundle described below. You can also format your mail online, at https://html-online.com/editor and paste the result into "HTML Code".
+                </Text>
+
+                <Label prefHeight="17.0" prefWidth="600.0" text="5. Embedding Images" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
+                <Text wrappingWidth="770">
+                    There are two ways to include images in your email, from simplest to most manual:
+                </Text>
+                <Text wrappingWidth="770">
+                    A) Template bundle (recommended) - "Load Template" accepts a .zip, .tar, .tar.gz or .tgz archive containing your HTML/text template plus its images, so you never have to think about attachment numbering. To build one:
+                </Text>
+                <Text wrappingWidth="770">
+                    1. Write your template as a normal .html (or .txt) file, and reference each image by its ordinary filename, exactly as you would on a web page, e.g. &lt;img src="banner.png"&gt; or &lt;img src="logo.png"&gt;.
+                </Text>
+                <Text wrappingWidth="770">
+                    2. Put that .html file and every image it references into one folder together (a flat folder is simplest; subfolders are fine too, RationalMassMailer matches images by filename regardless of their path inside the archive).
+                </Text>
+                <Text wrappingWidth="770">
+                    3. Compress the contents of that folder into a single .zip or .tar/.tar.gz/.tgz file - on macOS, select the files (not the folder itself) in Finder, right-click, and choose Compress; on Windows, select the files, right-click, and choose Send to &gt; Compressed (zipped) folder.
+                </Text>
+                <Text wrappingWidth="770">
+                    4. Back in RationalMassMailer, click "Load Template" and choose that archive. It extracts every image, attaches it, and automatically rewrites your plain filenames (e.g. src="banner.png") to the correct inline src="cid:N" - then switches you to the "Formatted" tab so you can see the result immediately, images included.
+                </Text>
+                <Text wrappingWidth="770">
+                    Unlike the "Select Attachments" button below (limited to 3 files), a template bundle can carry as many images as your design needs. Click "Show Sample" any time to see a working bundled example, built exactly this way.
+                </Text>
+                <Text wrappingWidth="770">
+                    B) Manual attachments - alternatively, click "Select Attachments" to attach up to three files directly (images, PDFs, documents). If you attach images this way and want to position them inline in your email yourself, reference them as &lt;img src="cid:0"&gt;, where 0 refers to the first attached image, 1 to the second, and 2 to the third, in the order you selected them.
                 </Text>
             </children>
             <padding>

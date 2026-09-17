@@ -4,6 +4,6 @@ target/
 .settings/
 .vscode/
 *.lck
-rational-massmail.txt
+rational-massmail.txt*
 .DS_Store
 dependency-reduced-pom.xml
