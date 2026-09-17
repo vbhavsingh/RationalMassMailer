@@ -27,10 +27,10 @@
        <Label text="Mail Provider*:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
        <ComboBox fx:id="mailProvider" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-       <Label text="From Email ID*:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-       <TextField fx:id="emailUserName" promptText="Enter full gmail or yahoo id, or your SMTP2GO username" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+       <Label fx:id="emailUserNameLabel" text="From Email ID*:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+       <TextField fx:id="emailUserName" promptText="Enter full gmail or yahoo id" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-       <Label text="Email Password*:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+       <Label fx:id="emailPasswordLabel" text="Email Password*:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
        <PasswordField fx:id="emailPassword" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
        <Label fx:id="smtp2GoFromEmailLabel" text="SMTP2GO From Email*:" GridPane.columnIndex="0" GridPane.rowIndex="4" />

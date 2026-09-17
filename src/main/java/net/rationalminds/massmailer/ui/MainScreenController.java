@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 
 import net.rationalminds.massmailer.biz.BusinessHelper;
 import net.rationalminds.massmailer.biz.MassEmailService;
+import net.rationalminds.massmailer.biz.SmtpSessionService;
 import net.rationalminds.massmailer.ui.data.DynamicContactsFromCsv;
 import net.rationalminds.massmailer.ui.data.MailDetails;
 import net.rationalminds.massmailer.ui.data.MessageBoard;
@@ -67,7 +68,11 @@ public class MainScreenController implements Initializable {
     @FXML
     ComboBox<String> mailProvider;
     @FXML
+    Label emailUserNameLabel;
+    @FXML
     TextField emailUserName;
+    @FXML
+    Label emailPasswordLabel;
     @FXML
     TextField emailPassword;
     @FXML
@@ -138,7 +143,7 @@ public class MainScreenController implements Initializable {
 
         smtp2GoFromEmail.textProperty().bindBidirectional(details.smtp2GoFromEmailProperty());
         smtp2GoFromEmail.disableProperty().bindBidirectional(lockScreen);
-        updateSmtp2GoFieldVisibility();
+        updateProviderFields();
 
         emailSubject.textProperty().bindBidirectional(details.emailSubjectProperty());
         emailSubject.disableProperty().bindBidirectional(lockScreen);
@@ -197,7 +202,7 @@ public class MainScreenController implements Initializable {
         mailProvider.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                updateSmtp2GoFieldVisibility();
+                updateProviderFields();
                 validateEmailUserName();
                 validateSmtp2GoFromEmail();
                 showMessages();
@@ -298,11 +303,21 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * The SMTP2GO From Email field only makes sense when SMTP2GO is the
-     * selected provider, so it is hidden the rest of the time.
+     * "From Email ID" and "Email Password" mean something different for
+     * SMTP2GO (an SMTP account username/password, unrelated to the actual
+     * sender mailbox) than for Gmail/Yahoo (the mailbox's own login), so
+     * their labels and prompts switch with the selected provider. The
+     * SMTP2GO From Email field only makes sense for SMTP2GO, so it is
+     * hidden the rest of the time.
      */
-    private void updateSmtp2GoFieldVisibility() {
+    private void updateProviderFields() {
         boolean isSmtp2Go = Constants.MAIL_PROVIDER_SMTP2GO.equals(mailProvider.getValue());
+
+        emailUserNameLabel.setText(isSmtp2Go ? "SMTP2GO Username*:" : "From Email ID*:");
+        emailUserName.setPromptText(isSmtp2Go ? "Enter your SMTP2GO account username" : "Enter full gmail or yahoo id");
+
+        emailPasswordLabel.setText(isSmtp2Go ? "SMTP2GO Password*:" : "Email Password*:");
+
         smtp2GoFromEmailLabel.setVisible(isSmtp2Go);
         smtp2GoFromEmailLabel.setManaged(isSmtp2Go);
         smtp2GoFromEmail.setVisible(isSmtp2Go);
@@ -482,12 +497,13 @@ public class MainScreenController implements Initializable {
     @FXML
     protected void sendTestEmail(ActionEvent event) throws IOException {
         try {
+        	String testRecipient = SmtpSessionService.getFromAddress(details);
         	mainScreenLiveMessage.setStyle("-fx-fill: blue;");
-        	mainScreenLiveMessageProperty.set("Sending test mail to : "+details.geEmailUserName());
+        	mainScreenLiveMessageProperty.set("Sending test mail to : "+testRecipient);
         	Thread.sleep(1000);
             BusinessHelper.sendTestEmail(details);
             mainScreenLiveMessage.setStyle("-fx-fill: green;");
-            mainScreenLiveMessageProperty.set("Send test mail to : "+details.geEmailUserName());
+            mainScreenLiveMessageProperty.set("Send test mail to : "+testRecipient);
         } catch (Exception ex) {
             msgBoard.appendMessage("Application error! " + ex.getMessage());
             msgBoard.appendMessage("Please try again after restarting aplication");
