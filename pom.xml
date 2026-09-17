@@ -178,7 +178,7 @@
 							<name>${project.name}</name>
 							<appVersion>${project.version}</appVersion>
 							<vendor>rationalminds.net</vendor>
-							<destination>${project.build.directory}/installer</destination>
+							<destination>${project.build.directory}</destination>
 							<input>${project.build.directory}/jpackage-input</input>
 							<mainJar>${project.artifactId}.jar</mainJar>
 							<mainClass>${jar.mainClass}</mainClass>
@@ -202,8 +202,8 @@
 								</goals>
 								<configuration>
 									<target>
-										<move file="${project.build.directory}/installer/${project.artifactId}-${project.version}.pkg"
-											  tofile="${project.build.directory}/installer/${project.artifactId}.pkg" />
+										<move file="${project.build.directory}/${project.artifactId}-${project.version}.pkg"
+											  tofile="${project.build.directory}/${project.artifactId}.pkg" />
 									</target>
 								</configuration>
 							</execution>
